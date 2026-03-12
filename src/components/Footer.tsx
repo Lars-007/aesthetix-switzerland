@@ -1,47 +1,59 @@
-"use client";
-import Link from "next/link";
-import Image from "next/image";
+import Link from 'next/link';
+
 export default function Footer() {
-    return (
-        <footer style={{ borderTop: "1px solid var(--border)", padding: "5rem 0 2rem" }}>
-            <div className="container" style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr 1.5fr", gap: "3rem", marginBottom: "4rem" }}>
-                <div>
-                    <Image src="/logo.png" alt="AESTHETIX" width={100} height={24} style={{ objectFit: "contain", marginBottom: "1.2rem" }} />
-                    <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem", lineHeight: 1.7 }}>Premium High-Performance Skincare & Tools für den modernen Mann. 🇨🇭 Designed in Switzerland.</p>
-                </div>
-                {[
-                    { title: "Shop", links: [{ label: "Alle Produkte", href: "/products" }, { label: "Skincare", href: "/collections/skincare" }, { label: "Tools", href: "/collections/tools" }, { label: "Grooming", href: "/collections/grooming" }, { label: "Favoriten", href: "/wishlist" }] },
-                    { title: "Info", links: [{ label: "Über Uns", href: "/about" }, { label: "Blog", href: "/blog" }, { label: "FAQ", href: "/#faq" }, { label: "Kontakt", href: "/contact" }, { label: "Bestellverfolgung", href: "/tracking" }] },
-                ].map((col) => (
-                    <div key={col.title}>
-                        <h4 style={{ fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.2rem" }}>{col.title}</h4>
-                        <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                            {col.links.map((l) => (
-                                <li key={l.label}><Link href={l.href} style={{ color: "var(--text-secondary)", fontSize: "0.85rem", transition: "color 0.3s" }}
-                                    onMouseEnter={(e) => e.currentTarget.style.color = "#fff"} onMouseLeave={(e) => e.currentTarget.style.color = "var(--text-secondary)"}>{l.label}</Link></li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
-                <div>
-                    <h4 style={{ fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "1.2rem" }}>Newsletter</h4>
-                    <p style={{ color: "var(--text-secondary)", marginBottom: "1rem", fontSize: "0.85rem" }}>Neuheiten & exklusive Angebote direkt in dein Postfach.</p>
-                    <div style={{ display: "flex", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)", overflow: "hidden" }}>
-                        <input type="email" placeholder="deine@email.ch" style={{ flex: 1, background: "transparent", border: "none", padding: "0.8rem 1rem", color: "#fff", outline: "none", fontSize: "0.85rem" }} />
-                        <button style={{ background: "#fff", color: "#000", border: "none", padding: "0 1.5rem", fontWeight: 700, cursor: "pointer", fontSize: "0.75rem", letterSpacing: "0.08em" }}>GO</button>
-                    </div>
-                </div>
+  return (
+    <footer className="bg-black border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+          {/* Brand */}
+          <div>
+            <h3 className="font-display text-xl font-bold tracking-wider mb-4">
+              AESTHETIX
+            </h3>
+            <p className="text-sm text-white/40 leading-relaxed max-w-xs">
+              Premium Männer-Skincare aus der Schweiz. Entwickelt für Männer, die ihr volles Potenzial ausschöpfen wollen.
+            </p>
+          </div>
+
+          {/* Navigation */}
+          <div>
+            <h4 className="text-xs tracking-[0.2em] uppercase text-white/30 mb-6 font-semibold">Navigation</h4>
+            <div className="flex flex-col gap-3">
+              <Link href="/products" className="text-sm text-white/50 hover:text-white transition-colors">Produkte</Link>
+              <Link href="/#why" className="text-sm text-white/50 hover:text-white transition-colors">Über uns</Link>
+              <Link href="/#faq" className="text-sm text-white/50 hover:text-white transition-colors">FAQ</Link>
+              <Link href="/cart" className="text-sm text-white/50 hover:text-white transition-colors">Warenkorb</Link>
             </div>
-            <div className="divider" />
-            <div className="container" style={{ paddingTop: "1.5rem", display: "flex", justifyContent: "space-between", color: "var(--text-muted)", fontSize: "0.75rem" }}>
-                <p>&copy; 2026 AESTHETIX SWITZERLAND. All rights reserved.</p>
-                <div style={{ display: "flex", gap: "1.5rem" }}>
-                    {[{ label: "Impressum", href: "/impressum" }, { label: "AGB", href: "/agb" }, { label: "Datenschutz", href: "/datenschutz" }, { label: "Widerruf", href: "/widerruf" }].map((l) => (
-                        <Link key={l.label} href={l.href} style={{ transition: "color 0.3s" }}
-                            onMouseEnter={(e) => e.currentTarget.style.color = "#fff"} onMouseLeave={(e) => e.currentTarget.style.color = "var(--text-muted)"}>{l.label}</Link>
-                    ))}
-                </div>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="text-xs tracking-[0.2em] uppercase text-white/30 mb-6 font-semibold">Kontakt</h4>
+            <div className="flex flex-col gap-3">
+              <p className="text-sm text-white/50">support@aesthetix.ch</p>
+              <p className="text-sm text-white/50">Schweiz</p>
             </div>
-        </footer>
-    );
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-white/25">
+            &copy; 2026 AESTHETIX SWITZERLAND. Alle Rechte vorbehalten.
+          </p>
+          <div className="flex gap-6">
+            <Link href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors">
+              Datenschutz
+            </Link>
+            <Link href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors">
+              AGB
+            </Link>
+            <Link href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors">
+              Impressum
+            </Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 }

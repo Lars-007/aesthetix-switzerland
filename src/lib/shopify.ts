@@ -1,238 +1,168 @@
-export const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
-export const storefrontAccessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
-export const apiVersion = process.env.NEXT_PUBLIC_SHOPIFY_GRAPHQL_API_VERSION || '2024-04';
+const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN!;
+const storefrontAccessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN!;
+const endpoint = `https://${domain}/api/2024-01/graphql.json`;
 
-// Basic Shopify Types
-export type ShopifyImage = {
+type ShopifyResponse<T> = {
+  data: T;
+  errors?: { message: string }[];
+};
+
+async function shopifyFetch<T>(query: string, variables?: Record<string, unknown>): Promise<T> {
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
+    },
+    body: JSON.stringify({ query, variables }),
+    next: { revalidate: 60 },
+  });
+
+  const json: ShopifyResponse<T> = await res.json();
+
+  if (json.errors) {
+    throw new Error(json.errors.map(e => e.message).join(', '));
+  }
+
+  return json.data;
+}
+
+export interface ShopifyImage {
   url: string;
   altText: string | null;
   width: number;
   height: number;
-};
+}
 
-export type ShopifyMoneyV2 = {
+export interface ShopifyPrice {
   amount: string;
   currencyCode: string;
-};
+}
 
-export type ShopifyProductVariant = {
+export interface ShopifyProduct {
   id: string;
   title: string;
-  availableForSale: boolean;
-  price: ShopifyMoneyV2;
-  compareAtPrice: ShopifyMoneyV2 | null;
-  selectedOptions: {
-    name: string;
-    value: string;
-  }[];
-};
-
-export type ShopifyProduct = {
-  id: string;
   handle: string;
-  title: string;
   description: string;
   descriptionHtml: string;
   availableForSale: boolean;
-  featuredImage: ShopifyImage | null;
+  tags: string[];
+  priceRange: {
+    minVariantPrice: ShopifyPrice;
+    maxVariantPrice: ShopifyPrice;
+  };
+  compareAtPriceRange: {
+    minVariantPrice: ShopifyPrice;
+    maxVariantPrice: ShopifyPrice;
+  };
   images: {
     edges: { node: ShopifyImage }[];
   };
   variants: {
-    edges: { node: ShopifyProductVariant }[];
+    edges: {
+      node: {
+        id: string;
+        title: string;
+        availableForSale: boolean;
+        price: ShopifyPrice;
+        compareAtPrice: ShopifyPrice | null;
+        image: ShopifyImage | null;
+      };
+    }[];
   };
-  collections?: {
-    edges: { node: { handle: string; title: string } }[];
-  };
-};
+}
 
-export async function shopifyFetch<T>({
-  cache = 'force-cache',
-  headers,
-  query,
-  tags,
-  variables
-}: {
-  cache?: RequestCache;
-  headers?: HeadersInit;
-  query: string;
-  tags?: string[];
-  variables?: any;
-}): Promise<{ status: number; body: T } | never> {
-  try {
-    const result = await fetch(`https://${domain}/api/${apiVersion}/graphql.json`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': storefrontAccessToken!,
-        ...headers
-      },
-      body: JSON.stringify({
-        ...(query && { query }),
-        ...(variables && { variables })
-      }),
-      cache,
-      ...(tags && { next: { tags } })
-    });
-
-    const body = await result.json();
-
-    if (body.errors) {
-      throw body.errors[0];
+const PRODUCT_FRAGMENT = `
+  fragment ProductFields on Product {
+    id
+    title
+    handle
+    description
+    descriptionHtml
+    availableForSale
+    tags
+    priceRange {
+      minVariantPrice { amount currencyCode }
+      maxVariantPrice { amount currencyCode }
     }
-
-    return {
-      status: result.status,
-      body
-    };
-  } catch (e) {
-    console.error('Error in shopifyFetch:', e);
-    throw {
-      error: e,
-      query
-    };
+    compareAtPriceRange {
+      minVariantPrice { amount currencyCode }
+      maxVariantPrice { amount currencyCode }
+    }
+    images(first: 10) {
+      edges {
+        node { url altText width height }
+      }
+    }
+    variants(first: 20) {
+      edges {
+        node {
+          id
+          title
+          availableForSale
+          price { amount currencyCode }
+          compareAtPrice { amount currencyCode }
+          image { url altText width height }
+        }
+      }
+    }
   }
-}
+`;
 
-// Utility to flatten edges
-export const removeEdgesAndNodes = (array: any[]) => {
-  return array.map((edge) => edge?.node);
-};
-
-// --- QUERIES ---
-
-export async function getProducts({ sortKey = 'TITLE', reverse = false, query }: { sortKey?: string; reverse?: boolean; query?: string } = {}): Promise<ShopifyProduct[]> {
-  const productsQuery = `
-    query getProducts($sortKey: ProductSortKeys, $reverse: Boolean, $query: String) {
-      products(sortKey: $sortKey, reverse: $reverse, query: $query, first: 100) {
+export async function getProducts(first = 20): Promise<ShopifyProduct[]> {
+  const data = await shopifyFetch<{
+    products: { edges: { node: ShopifyProduct }[] };
+  }>(`
+    ${PRODUCT_FRAGMENT}
+    query Products($first: Int!) {
+      products(first: $first, sortKey: BEST_SELLING) {
         edges {
-          node {
-            id
-            handle
-            title
-            description
-            descriptionHtml
-            availableForSale
-            featuredImage {
-              url
-              altText
-              width
-              height
-            }
-            images(first: 10) {
-              edges {
-                node {
-                  url
-                  altText
-                  width
-                  height
-                }
-              }
-            }
-            variants(first: 100) {
-              edges {
-                node {
-                  id
-                  title
-                  availableForSale
-                  price {
-                    amount
-                    currencyCode
-                  }
-                  compareAtPrice {
-                    amount
-                    currencyCode
-                  }
-                  selectedOptions {
-                    name
-                    value
-                  }
-                }
-              }
-            }
-            collections(first: 10) {
-              edges {
-                node {
-                  handle
-                  title
-                }
-              }
-            }
-          }
+          node { ...ProductFields }
         }
       }
     }
-  `;
+  `, { first });
 
-  const res = await shopifyFetch<{ data: { products: { edges: { node: ShopifyProduct }[] } } }>({
-    query: productsQuery,
-    variables: {
-      sortKey,
-      reverse,
-      query
-    }
-  });
-
-  return removeEdgesAndNodes(res.body.data.products.edges);
+  return data.products.edges.map(({ node }) => node);
 }
 
-export async function getProduct(handle: string): Promise<ShopifyProduct | undefined> {
-  const productQuery = `
-    query getProduct($handle: String!) {
-      product(handle: $handle) {
-        id
-        handle
-        title
-        description
-        descriptionHtml
-        availableForSale
-        featuredImage {
-          url
-          altText
-          width
-          height
-        }
-        images(first: 10) {
-          edges {
-            node {
-              url
-              altText
-              width
-              height
-            }
-          }
-        }
-        variants(first: 100) {
-          edges {
-            node {
-              id
-              title
-              availableForSale
-              price {
-                amount
-                currencyCode
-              }
-              compareAtPrice {
-                amount
-                currencyCode
-              }
-              selectedOptions {
-                name
-                value
-              }
-            }
-          }
-        }
+export async function getProduct(handle: string): Promise<ShopifyProduct | null> {
+  const data = await shopifyFetch<{
+    productByHandle: ShopifyProduct | null;
+  }>(`
+    ${PRODUCT_FRAGMENT}
+    query Product($handle: String!) {
+      productByHandle(handle: $handle) {
+        ...ProductFields
       }
     }
-  `;
+  `, { handle });
 
-  const res = await shopifyFetch<{ data: { product: ShopifyProduct } }>({
-    query: productQuery,
-    variables: {
-      handle
+  return data.productByHandle;
+}
+
+export async function createCheckout(lineItems: { variantId: string; quantity: number }[]): Promise<string> {
+  const data = await shopifyFetch<{
+    checkoutCreate: {
+      checkout: { webUrl: string };
+      checkoutUserErrors: { message: string }[];
+    };
+  }>(`
+    mutation CheckoutCreate($lineItems: [CheckoutLineItemInput!]!) {
+      checkoutCreate(input: { lineItems: $lineItems }) {
+        checkout { webUrl }
+        checkoutUserErrors { message }
+      }
     }
-  });
+  `, { lineItems });
 
-  return res.body.data.product || undefined;
+  if (data.checkoutCreate.checkoutUserErrors.length > 0) {
+    throw new Error(data.checkoutCreate.checkoutUserErrors.map(e => e.message).join(', '));
+  }
+
+  return data.checkoutCreate.checkout.webUrl;
+}
+
+export function formatPrice(amount: string, currency = 'CHF'): string {
+  return `${currency} ${parseFloat(amount).toFixed(2)}`;
 }

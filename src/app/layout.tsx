@@ -1,35 +1,35 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import './globals.css';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import CartDrawer from '@/components/CartDrawer';
 
 export const metadata: Metadata = {
-  title: "AESTHETIX | Swiss Premium Skincare for Men",
-  description: "Hochdosierte Skincare-Formeln und professionelle Tools aus der Schweiz. Designed für Männer, die das Maximum aus ihrem Look herausholen. Master Your Appearance.",
-  keywords: ["AESTHETIX", "Skincare", "Looksmaxing", "Swiss Made", "Premium Skincare", "Männer Skincare", "Dermaroller", "Gua Sha", "Vitamin C Serum"],
+  title: 'AESTHETIX SWITZERLAND | Premium Männer-Skincare',
+  description: 'Verbessere dein Aussehen mit hochwertigen AESTHETIX Produkten. Premium Männer-Skincare aus der Schweiz. Natürliche Inhaltsstoffe, sichtbare Resultate.',
+  keywords: ['Männer Skincare', 'Looksmaxxing', 'Schweiz', 'Premium', 'Jawline', 'Niacinamid', 'Hautpflege Männer'],
   openGraph: {
-    title: "AESTHETIX | Master Your Appearance",
-    description: "Swiss Premium Skincare & Tools für Männer. Hochdosierte Formeln, professionelle Tools, designed in der Schweiz.",
-    type: "website",
-    locale: "de_CH",
-    siteName: "AESTHETIX",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "AESTHETIX | Master Your Appearance",
-    description: "Swiss Premium Skincare & Looksmaxing Tools für Männer.",
+    title: 'AESTHETIX SWITZERLAND | Premium Männer-Skincare',
+    description: 'Verbessere dein Aussehen mit hochwertigen AESTHETIX Produkten.',
+    type: 'website',
+    locale: 'de_CH',
+    siteName: 'AESTHETIX SWITZERLAND',
   },
   robots: { index: true, follow: true },
-  authors: [{ name: "AESTHETIX" }],
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="de">
-      <body>
-        {children}
+      <body className="bg-bg text-white antialiased">
+        <Navbar />
+        <CartDrawer />
+        <main className="min-h-screen">{children}</main>
+        <Footer />
       </body>
     </html>
   );
