@@ -3,7 +3,7 @@ import FeaturedProductsClient from "./FeaturedProductsClient";
 
 export default async function FeaturedProducts() {
     // Fetch products from Shopify instead of static file
-    let products = [];
+    let products: any[] = [];
     try {
         products = await getProducts({ sortKey: "BEST_SELLING", reverse: true });
     } catch (e) {

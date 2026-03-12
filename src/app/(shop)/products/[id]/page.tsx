@@ -24,7 +24,7 @@ export default async function PDP({ params }: { params: Promise<{ id: string }> 
 
     // Attempt to fetch some basic related/cross-sell products
     // (In a real store, you'd query by the same collection/tags)
-    let allProducts = [];
+    let allProducts: any[] = [];
     try {
         allProducts = await getProducts({ first: 10 } as any);
     } catch (e) {}
@@ -34,8 +34,8 @@ export default async function PDP({ params }: { params: Promise<{ id: string }> 
     const category = product.collections?.edges?.[0]?.node?.title || "";
     
     // Simple mock logic for related vs cross-sell based on collections
-    const related = otherProducts.filter(p => p.collections?.edges?.some(e => e.node.title === category)).slice(0, 4);
-    const crossSell = otherProducts.filter(p => !p.collections?.edges?.some(e => e.node.title === category)).sort(() => Math.random() - 0.5).slice(0, 4);
+    const related = otherProducts.filter(p => p.collections?.edges?.some((e: any) => e.node.title === category)).slice(0, 4);
+    const crossSell = otherProducts.filter(p => !p.collections?.edges?.some((e: any) => e.node.title === category)).sort(() => Math.random() - 0.5).slice(0, 4);
 
     return <ProductClient product={product} related={related} crossSell={crossSell} />;
 }

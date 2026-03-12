@@ -2,7 +2,7 @@ import { getProducts } from "@/lib/shopify";
 import ProductsPageClient from "./ProductsClient";
 
 export default async function ProductsPage() {
-    let products = [];
+    let products: any[] = [];
     try {
         products = await getProducts({ sortKey: "TITLE" });
     } catch (e) {

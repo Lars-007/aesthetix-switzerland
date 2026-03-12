@@ -23,7 +23,7 @@ export default function RecentlyViewed() {
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "1.2rem" }}>
                     {products.map((p, i) => p && (
                         <motion.div key={p.id} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: i * 0.08 }}>
-                            <ProductCard product={p} />
+                            <ProductCard product={p as any} />
                         </motion.div>
                     ))}
                 </div>

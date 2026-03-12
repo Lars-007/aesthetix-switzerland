@@ -36,7 +36,7 @@ export default function WishlistPage() {
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1.2rem" }}>
                     {wishlistProducts.map((p, i) => (
                         <motion.div key={p.id} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.1 + i * 0.08 }}>
-                            <ProductCard product={p} />
+                            <ProductCard product={p as any} />
                         </motion.div>
                     ))}
                 </div>

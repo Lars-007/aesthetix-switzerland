@@ -21,7 +21,7 @@ export default function CollectionPage({ params }: { params: Promise<{ slug: str
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(270px, 1fr))", gap: "1.2rem" }}>
                 {products.map((p, i) => (
                     <motion.div key={p.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
-                        <ProductCard product={p} />
+                        <ProductCard product={p as any} />
                     </motion.div>
                 ))}
             </div>
