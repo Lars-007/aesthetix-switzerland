@@ -144,24 +144,28 @@ export async function getProduct(handle: string): Promise<ShopifyProduct | null>
 
 export async function createCheckout(lineItems: { variantId: string; quantity: number }[]): Promise<string> {
   const data = await shopifyFetch<{
-    checkoutCreate: {
-      checkout: { webUrl: string };
-      checkoutUserErrors: { message: string }[];
+    cartCreate: {
+      cart: { checkoutUrl: string };
+      userErrors: { message: string }[];
     };
   }>(`
-    mutation CheckoutCreate($lineItems: [CheckoutLineItemInput!]!) {
-      checkoutCreate(input: { lineItems: $lineItems }) {
-        checkout { webUrl }
-        checkoutUserErrors { message }
+    mutation cartCreate($input: CartInput) {
+      cartCreate(input: $input) {
+        cart { checkoutUrl }
+        userErrors { message }
       }
     }
-  `, { lineItems });
+  `, { 
+    input: { 
+      lines: lineItems.map(item => ({ merchandiseId: item.variantId, quantity: item.quantity })) 
+    } 
+  });
 
-  if (data.checkoutCreate.checkoutUserErrors.length > 0) {
-    throw new Error(data.checkoutCreate.checkoutUserErrors.map(e => e.message).join(', '));
+  if (data.cartCreate.userErrors.length > 0) {
+    throw new Error(data.cartCreate.userErrors.map(e => e.message).join(', '));
   }
 
-  return data.checkoutCreate.checkout.webUrl;
+  return data.cartCreate.cart.checkoutUrl;
 }
 
 export function formatPrice(amount: string, currency = 'CHF'): string {

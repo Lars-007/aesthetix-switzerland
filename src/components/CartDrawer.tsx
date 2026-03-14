@@ -21,7 +21,8 @@ export default function CartDrawer() {
       }));
       const checkoutUrl = await createCheckout(lineItems);
       window.location.href = checkoutUrl;
-    } catch {
+    } catch (error) {
+      console.error(error); 
       alert('Fehler beim Erstellen des Checkouts. Bitte versuche es erneut.');
     } finally {
       setLoading(false);
