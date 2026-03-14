@@ -30,7 +30,7 @@ export default function Footer() {
           <div>
             <h4 className="text-xs tracking-[0.2em] uppercase text-white/30 mb-6 font-semibold">Kontakt</h4>
             <div className="flex flex-col gap-3">
-              <p className="text-sm text-white/50">support@aesthetix.ch</p>
+              <a href="mailto:info@aesthetix-switzerland.ch" className="text-sm text-white/50 hover:text-white transition-colors">info@aesthetix-switzerland.ch</a>
               <p className="text-sm text-white/50">Schweiz</p>
             </div>
           </div>
@@ -41,15 +41,21 @@ export default function Footer() {
           <p className="text-xs text-white/25">
             &copy; 2026 AESTHETIX SWITZERLAND. Alle Rechte vorbehalten.
           </p>
-          <div className="flex gap-6">
-            <Link href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors">
-              Datenschutz
-            </Link>
-            <Link href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors">
+          <div className="flex flex-wrap gap-x-6 gap-y-3 justify-center sm:justify-end">
+            <Link href="/agb" className="text-xs text-white/25 hover:text-white/50 transition-colors">
               AGB
             </Link>
-            <Link href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors">
-              Impressum
+            <Link href="/datenschutz" className="text-xs text-white/25 hover:text-white/50 transition-colors">
+              Datenschutz
+            </Link>
+            <Link href="/widerrufsrecht" className="text-xs text-white/25 hover:text-white/50 transition-colors">
+              Widerrufsrecht
+            </Link>
+            <Link href="/versand" className="text-xs text-white/25 hover:text-white/50 transition-colors">
+              Versandbedingungen
+            </Link>
+            <Link href="/kontakt" className="text-xs text-white/25 hover:text-white/50 transition-colors">
+              Kontakt
             </Link>
           </div>
         </div>
