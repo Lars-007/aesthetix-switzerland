@@ -1,6 +1,7 @@
 const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN!;
 const storefrontAccessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN || process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN!;
-const apiVersion = process.env.NEXT_PUBLIC_SHOPIFY_GRAPHQL_API_VERSION || '2024-04';
+const apiVersion = process.env.NEXT_PUBLIC_SHOPIFY_GRAPHQL_API_VERSION || '2026-01';
+const privateStorefrontToken = process.env.SHOPIFY_STOREFRONT_PRIVATE_TOKEN;
 const endpoint = `https://${domain}/api/${apiVersion}/graphql.json`;
 
 type ShopifyResponse<T> = {
@@ -9,12 +10,19 @@ type ShopifyResponse<T> = {
 };
 
 async function shopifyFetch<T>(query: string, variables?: Record<string, unknown>): Promise<T> {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+
+  if (privateStorefrontToken) {
+    headers['Shopify-Storefront-Private-Token'] = privateStorefrontToken;
+  } else {
+    headers['X-Shopify-Storefront-Access-Token'] = storefrontAccessToken;
+  }
+
   const res = await fetch(endpoint, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
-    },
+    headers,
     body: JSON.stringify({ query, variables }),
     next: { revalidate: 60 },
   });
