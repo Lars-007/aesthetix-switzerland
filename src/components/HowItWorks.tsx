@@ -31,10 +31,10 @@ export default function HowItWorks() {
     <section id="how" ref={ref} className="reveal py-24 md:py-32 bg-black">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <span className="text-[10px] tracking-[0.3em] uppercase text-white/30 font-medium">
+          <span className="text-[10px] tracking-[0.3em] uppercase text-white/50 font-medium">
             In 3 Schritten
           </span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mt-3">
+          <h2 className="font-display text-3xl md:text-5xl font-bold mt-3 text-white">
             So funktioniert es
           </h2>
         </div>
@@ -48,13 +48,13 @@ export default function HowItWorks() {
             >
               <div className="bg-bg-raised rounded-2xl border border-white/5 p-8 md:p-10 hover:border-white/10 transition-all duration-500 h-full">
                 <div className="flex items-center gap-4 mb-6">
-                  <span className="font-display text-4xl font-bold text-white/10">
+                  <span className="font-display text-4xl font-bold text-white/20">
                     {step.number}
                   </span>
-                  <step.icon className="w-6 h-6 text-white/40" />
+                  <step.icon className="w-6 h-6 text-white/60" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">{step.title}</h3>
-                <p className="text-sm text-white/40 leading-relaxed">{step.description}</p>
+                <h3 className="text-xl font-bold mb-3 text-white">{step.title}</h3>
+                <p className="text-sm text-white/70 leading-relaxed">{step.description}</p>
               </div>
 
               {/* Connector line (desktop) */}

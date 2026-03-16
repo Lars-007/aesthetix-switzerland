@@ -64,7 +64,7 @@ export default function ProductCard({ product }: { product: ShopifyProduct }) {
           {!soldOut && (
             <button
               onClick={handleAddToCart}
-              className="absolute bottom-3 right-3 bg-white text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-xl"
+              className="absolute bottom-3 right-3 bg-white text-black p-3 rounded-full hidden md:flex opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-xl items-center justify-center"
               aria-label="In den Warenkorb"
             >
               <ShoppingBag className="w-4 h-4" />
@@ -74,15 +74,15 @@ export default function ProductCard({ product }: { product: ShopifyProduct }) {
 
         {/* Info */}
         <div className="p-5">
-          <h3 className="text-sm font-semibold mb-2 group-hover:text-white/80 transition-colors line-clamp-1">
+          <h3 className="text-sm font-semibold mb-2 group-hover:text-white/90 transition-colors line-clamp-1 text-white">
             {product.title}
           </h3>
           <div className="flex items-center gap-2">
-            <span className={`text-sm font-bold ${soldOut ? 'text-white/30' : ''}`}>
+            <span className={`text-sm font-bold ${soldOut ? 'text-white/50' : 'text-white'}`}>
               {formatPrice(price.amount)}
             </span>
             {hasDiscount && (
-              <span className="text-xs text-white/30 line-through">
+              <span className="text-xs text-white/50 line-through">
                 {formatPrice(compareAt.amount)}
               </span>
             )}

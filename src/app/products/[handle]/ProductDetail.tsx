@@ -39,7 +39,7 @@ export default function ProductDetail({ product }: { product: ShopifyProduct }) 
     <section className="pt-28 pb-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Back link */}
-        <Link href="/products" className="inline-flex items-center gap-2 text-sm text-white/40 hover:text-white transition-colors mb-10">
+        <Link href="/products" className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors mb-10">
           <ArrowLeft className="w-4 h-4" />
           Alle Produkte
         </Link>
@@ -89,9 +89,9 @@ export default function ProductDetail({ product }: { product: ShopifyProduct }) 
             </h1>
 
             <div className="flex items-center gap-3 mb-8">
-              <span className="text-2xl font-bold">{formatPrice(variant.price.amount)}</span>
+              <span className="text-2xl font-bold text-white">{formatPrice(variant.price.amount)}</span>
               {hasDiscount && (
-                <span className="text-base text-white/30 line-through">
+                <span className="text-base text-white/50 line-through">
                   {formatPrice(variant.compareAtPrice!.amount)}
                 </span>
               )}
@@ -154,18 +154,18 @@ export default function ProductDetail({ product }: { product: ShopifyProduct }) 
                 { icon: Shield, text: 'Schweizer Qualität' },
                 { icon: Leaf, text: 'Naturbasiert' },
               ].map((badge) => (
-                <div key={badge.text} className="flex flex-col items-center gap-2 text-center bg-bg-raised rounded-xl py-4 px-2 border border-white/5">
-                  <badge.icon className="w-4 h-4 text-white/30" />
-                  <span className="text-[10px] text-white/30">{badge.text}</span>
+                <div key={badge.text} className="flex flex-col items-center gap-2 text-center bg-bg-raised rounded-xl py-4 px-2 border border-white/10 hover:border-white/20 transition-colors">
+                  <badge.icon className="w-5 h-5 text-white/60" />
+                  <span className="text-[11px] font-medium text-white/60">{badge.text}</span>
                 </div>
               ))}
             </div>
 
             {/* Description */}
             <div className="border-t border-white/5 pt-8">
-              <h3 className="text-sm font-semibold mb-4">Beschreibung</h3>
+              <h3 className="text-sm font-semibold mb-4 text-white">Beschreibung</h3>
               <div
-                className="text-sm text-white/40 leading-relaxed prose prose-invert prose-sm max-w-none"
+                className="text-sm text-white/70 leading-relaxed prose prose-invert prose-sm max-w-none prose-p:text-white/70 prose-headings:text-white prose-a:text-white"
                 dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
               />
             </div>
