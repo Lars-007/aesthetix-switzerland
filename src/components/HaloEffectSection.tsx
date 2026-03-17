@@ -1,94 +1,205 @@
 'use client';
 
-import { useScrollReveal } from '@/lib/hooks';
-import { Sparkles, Briefcase, Heart, UserCheck } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Sparkles, Briefcase, Heart, UserCheck, TrendingUp, Crown, Zap, Target } from 'lucide-react';
 
 const blocks = [
   {
     icon: Sparkles,
-    title: '1. Der Halo-Effekt (Der "Heiligenschein")',
-    description: 'Dies ist der mächtigste psychologische Hebel. Wenn Menschen jemanden als attraktiv wahrnehmen, projizieren sie automatisch positive Charaktereigenschaften auf diese Person.',
+    accentIcon: Crown,
+    title: 'Der Halo-Effekt',
+    stat: '+73%',
+    statLabel: 'mehr Vertrauen',
+    description: 'Attraktive Menschen werden automatisch als kompetenter und vertrauenswürdiger wahrgenommen.',
     bullets: [
-      { label: 'Wahrnehmung', text: 'Gut aussehende Menschen werden instinktiv als kompetenter, vertrauenswürdiger, intelligenter und gesünder eingeschätzt.' },
-      { label: 'Vorteil', text: 'Man bekommt oft einen "Vertrauensvorschuss", noch bevor man das erste Wort gesagt hat.' },
-    ]
+      'Sofortiger Vertrauensvorschuss',
+      'Höhere wahrgenommene Kompetenz',
+      'Positiver erster Eindruck',
+    ],
+    direction: 'left' as const,
   },
   {
     icon: Briefcase,
-    title: '2. Das "Beauty Premium" im Beruf',
-    description: 'Statistiken zeigen immer wieder, dass attraktive Menschen im Berufsleben messbare Vorteile haben:',
+    accentIcon: TrendingUp,
+    title: 'Beauty Premium',
+    stat: '+15%',
+    statLabel: 'mehr Gehalt',
+    description: 'Studien zeigen: Attraktivere Menschen verdienen messbar mehr und werden schneller befördert.',
     bullets: [
-      { label: 'Karriere', text: 'Sie werden eher zu Vorstellungsgesprächen eingeladen und schneller befördert.' },
-      { label: 'Gehalt', text: 'Es gibt einen korrelierenden Effekt zwischen Aussehen und Einkommen (durchschnittlich 10-15 % mehr).' },
-      { label: 'Überzeugungskraft', text: 'Attraktive Führungskräfte wirken überzeugender und strahlen mehr Autorität aus.' },
-    ]
+      'Schnellere Beförderungen',
+      'Mehr Überzeugungskraft',
+      'Stärkere Autorität',
+    ],
+    direction: 'right' as const,
   },
   {
     icon: Heart,
-    title: '3. Dating & Der Frauenmarkt',
-    description: 'Ein gepflegtes, "ästhetisches" Äußeres signalisiert Disziplin, Genetik und Selbstachtung.',
+    accentIcon: Target,
+    title: 'Dating-Vorteil',
+    stat: '3x',
+    statLabel: 'mehr Matches',
+    description: 'Gepflegtes Äusseres signalisiert Disziplin und Status — der entscheidende erste Eindruck.',
     bullets: [
-      { label: 'Erster Eindruck', text: 'Du wirst in sozialen Situationen und beim Dating bevorzugt und höflicher behandelt.' },
-      { label: 'Erfolgsquote', text: 'Attraktivere Männer fallen sofort positiv auf, finden auf dem Markt schneller einen Partner und haben eine weitaus höhere Anziehungskraft.' },
-      { label: 'Status', text: 'Eine markante Jawline und reine Haut suggerieren hohen Testosteronwert, Status und Maskulinität.' },
-    ]
+      'Höhere Anziehungskraft',
+      'Mehr Selbstbewusstsein',
+      'Stärkere Ausstrahlung',
+    ],
+    direction: 'left' as const,
   },
   {
     icon: UserCheck,
-    title: '4. Psychologisches Selbstvertrauen',
-    description: 'Der wohl wichtigste interne Vorteil ist der psychologische Feedback-Loop:',
+    accentIcon: Zap,
+    title: 'Selbstvertrauen',
+    stat: '100%',
+    statLabel: 'Confidence-Boost',
+    description: 'Look good, feel good — ein positiver Feedback-Loop, der dein gesamtes Auftreten verändert.',
     bullets: [
-      { label: 'Look Good, Feel Good', text: 'Wenn du weisst, dass du gut aussiehst, verändert sich deine Körperhaltung, dein Blickkontakt und deine Stimme ins Positive.' },
-      { label: 'Ausstrahlung', text: 'Dieses gesteigerte Selbstbewusstsein wirkt wiederum extrem attraktiv auf andere – ein positiver Teufelskreis voller Erfolg.' },
-    ]
-  }
+      'Bessere Körperhaltung',
+      'Stärkerer Blickkontakt',
+      'Positiver Teufelskreis',
+    ],
+    direction: 'right' as const,
+  },
 ];
 
+const cardVariants = {
+  hiddenLeft: { opacity: 0, x: -80, y: 20 },
+  hiddenRight: { opacity: 0, x: 80, y: 20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    transition: {
+      type: 'spring' as const,
+      damping: 25,
+      stiffness: 120,
+      duration: 0.8,
+    },
+  },
+};
+
+const statVariants = {
+  hidden: { opacity: 0, scale: 0.5 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      type: 'spring' as const,
+      damping: 15,
+      stiffness: 200,
+      delay: 0.3,
+    },
+  },
+};
+
+const barVariants = {
+  hidden: { width: '0%' },
+  visible: (i: number) => ({
+    width: '100%',
+    transition: {
+      duration: 1.2,
+      delay: 0.4 + i * 0.15,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  }),
+};
+
 export default function HaloEffectSection() {
-  const ref = useScrollReveal();
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="reveal py-24 md:py-32 bg-black/50 border-y border-white/5 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-[500px] bg-white/5 blur-[120px] rounded-full pointer-events-none" />
+    <section
+      ref={sectionRef}
+      className="py-24 md:py-32 bg-black/50 border-y border-white/5 relative overflow-hidden"
+    >
+      {/* Animated background glow */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/[0.03] blur-[150px] rounded-full pointer-events-none"
+        animate={isInView ? { scale: [0.8, 1.2, 1], opacity: [0, 0.5, 0.3] } : {}}
+        transition={{ duration: 3, ease: 'easeOut' }}
+      />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-20">
+        {/* Header */}
+        <motion.div
+          className="max-w-2xl mx-auto text-center mb-16 md:mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
           <span className="text-[10px] tracking-[0.3em] uppercase text-white/50 font-medium">
-            Die Psychologie des Erfolgs
+            Wissenschaftlich belegt
           </span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 mb-6 text-white">
+          <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 mb-4 text-white">
             Was bringen dir AESTHETIX Produkte?
           </h2>
-          <p className="text-white/80 text-lg leading-relaxed">
-            Statistisch gesehen haben gut aussehende Menschen eine weitaus bessere berufliche Karriere, verdienen mehr, sind insgesamt erfolgreicher und haben signifikant bessere Chancen auf dem Dating- und Frauenmarkt.
+          <p className="text-white/60 text-base leading-relaxed">
+            Besseres Aussehen = messbar mehr Erfolg. Im Job, beim Dating und im Alltag.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {blocks.map((block, i) => (
-            <div
+            <motion.div
               key={block.title}
-              className="bg-bg-card/50 backdrop-blur-sm rounded-2xl border border-white/10 p-8 md:p-10 hover:border-white/20 transition-all duration-500 hover:bg-bg-raised/80 group"
-              style={{ transitionDelay: `${i * 150}ms` }}
+              variants={cardVariants}
+              initial={block.direction === 'left' ? 'hiddenLeft' : 'hiddenRight'}
+              animate={isInView ? 'visible' : undefined}
+              transition={{ delay: i * 0.15 }}
+              className="group relative bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-sm rounded-2xl border border-white/10 p-7 md:p-8 hover:border-white/20 transition-all duration-500 hover:from-white/[0.08] hover:to-white/[0.04]"
             >
-              <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 group-hover:bg-white/20">
-                <block.icon className="w-6 h-6 text-white" />
+              {/* Top row: icon + stat */}
+              <div className="flex items-start justify-between mb-5">
+                <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:bg-white/15 transition-all duration-500">
+                  <block.icon className="w-5 h-5 text-white" />
+                </div>
+
+                <motion.div
+                  className="text-right"
+                  variants={statVariants}
+                  initial="hidden"
+                  animate={isInView ? 'visible' : undefined}
+                  transition={{ delay: i * 0.15 }}
+                >
+                  <span className="block text-2xl md:text-3xl font-bold text-white font-display leading-none">
+                    {block.stat}
+                  </span>
+                  <span className="text-[10px] tracking-wider uppercase text-white/40">
+                    {block.statLabel}
+                  </span>
+                </motion.div>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-white/90">{block.title}</h3>
-              <p className="text-white/80 leading-relaxed mb-8">{block.description}</p>
-              
-              <div className="space-y-4">
-                {block.bullets.map(b => (
-                  <div key={b.label} className="flex items-start gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-white/40 mt-2 flex-shrink-0 group-hover:bg-white/60 transition-colors" />
-                    <p className="text-sm leading-relaxed text-white/70">
-                      <strong className="text-white font-semibold">{b.label}:</strong> {b.text}
-                    </p>
+
+              {/* Title + description */}
+              <h3 className="text-xl font-bold mb-2 text-white">{block.title}</h3>
+              <p className="text-sm text-white/60 leading-relaxed mb-5">{block.description}</p>
+
+              {/* Animated bullet bars */}
+              <div className="space-y-3">
+                {block.bullets.map((bullet, j) => (
+                  <div key={bullet} className="flex items-center gap-3">
+                    <div className="relative w-full">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs font-medium text-white/80">{bullet}</span>
+                        <block.accentIcon className="w-3 h-3 text-white/30" />
+                      </div>
+                      <div className="h-[2px] bg-white/5 rounded-full overflow-hidden">
+                        <motion.div
+                          className="h-full bg-gradient-to-r from-white/40 to-white/10 rounded-full"
+                          variants={barVariants}
+                          custom={j}
+                          initial="hidden"
+                          animate={isInView ? 'visible' : undefined}
+                        />
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

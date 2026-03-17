@@ -1,58 +1,63 @@
 'use client';
 
-import { useScrollReveal } from '@/lib/hooks';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { Shield, Flame, Eye } from 'lucide-react';
 
 const reasons = [
   {
     icon: Shield,
-    title: 'Schweizer Präzision',
-    subtitle: 'Höchste Standards',
-    description: 'Höchste Qualitätsstandards für maximale Wirksamkeit. Pures Niacinamid & Mineralien ohne Füllstoffe. Alle unsere Produkte sind naturbasiert.',
+    title: 'Schweizer Qualität',
+    description: 'Pures Niacinamid & Mineralien. Keine Füllstoffe, keine Kompromisse.',
   },
   {
     icon: Flame,
     title: 'Der Halo-Effekt',
-    subtitle: 'Psychologischer Hebel',
-    description: 'Besseres Aussehen öffnet Türen und schafft sofortigen Respekt. Wer besser aussieht, wird als kompetenter und vertrauenswürdiger wahrgenommen.',
+    description: 'Besseres Aussehen = sofortiger Respekt und mehr Vertrauen.',
   },
   {
     icon: Eye,
     title: 'Sichtbare Resultate',
-    subtitle: 'Nachweisbar effektiv',
-    description: 'Scharfe Jawline und reine Haut führen zu mehr Status & Respekt. Gutaussehende Menschen sind statistisch erfolgreicher — beruflich und privat.',
+    description: 'Schärfere Jawline, reinere Haut — messbar mehr Erfolg.',
   },
 ];
 
 export default function WhySection() {
-  const ref = useScrollReveal();
+  const ref = useRef<HTMLElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="why" ref={ref} className="reveal py-24 md:py-32">
+    <section id="why" ref={ref} className="py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
           <span className="text-[10px] tracking-[0.3em] uppercase text-white/50 font-medium">
             Dein Vorteil
           </span>
           <h2 className="font-display text-3xl md:text-5xl font-bold mt-3 text-white">
             Warum AESTHETIX?
           </h2>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {reasons.map((reason, i) => (
-            <div
+            <motion.div
               key={reason.title}
-              className="group bg-bg-raised rounded-2xl border border-white/5 hover:border-white/10 p-8 md:p-10 transition-all duration-500"
-              style={{ transitionDelay: `${i * 100}ms` }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: i * 0.12 }}
+              className="group bg-bg-raised rounded-2xl border border-white/5 hover:border-white/10 p-8 transition-all duration-500 text-center"
             >
-              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-white/20 transition-colors">
+              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-5 mx-auto group-hover:bg-white/20 group-hover:scale-110 transition-all duration-500">
                 <reason.icon className="w-5 h-5 text-white/80" />
               </div>
-              <p className="text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">{reason.subtitle}</p>
-              <h3 className="text-xl font-bold mb-4 text-white">{reason.title}</h3>
-              <p className="text-sm text-white/70 leading-relaxed">{reason.description}</p>
-            </div>
+              <h3 className="text-lg font-bold mb-2 text-white">{reason.title}</h3>
+              <p className="text-sm text-white/60 leading-relaxed">{reason.description}</p>
+            </motion.div>
           ))}
         </div>
       </div>
