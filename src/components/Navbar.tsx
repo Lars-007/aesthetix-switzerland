@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingBag, Menu, X } from 'lucide-react';
+import { ShoppingBag, Menu, X, ArrowRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useCartStore } from '@/store/cart';
 
@@ -17,6 +17,22 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
+
+  const navLinks = [
+    { href: '/products', label: 'Produkte', desc: 'Unsere Bestseller' },
+    { href: '/#why', label: 'Über uns', desc: 'Unsere Mission' },
+    { href: '/#faq', label: 'FAQ', desc: 'Häufige Fragen' },
+  ];
+
   return (
     <>
       <nav
@@ -29,7 +45,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
+            <Link href="/" className="flex items-center gap-3 group relative z-50">
               <span className="font-display text-lg md:text-xl font-bold tracking-wider text-white">
                 AESTHETIX
               </span>
@@ -52,7 +68,7 @@ export default function Navbar() {
             </div>
 
             {/* Right side */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 relative z-50">
               <button
                 onClick={toggleCart}
                 className="relative p-2 text-white/70 hover:text-white transition-colors"
@@ -70,41 +86,68 @@ export default function Navbar() {
                 className="md:hidden p-2 text-white/70 hover:text-white transition-colors"
                 aria-label="Menu"
               >
-                {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Full screen solid overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-black/98 transition-all duration-500 md:hidden ${
-          mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        className={`fixed inset-0 z-40 bg-black transition-all duration-300 ease-out md:hidden ${
+          mobileOpen
+            ? 'opacity-100 pointer-events-auto'
+            : 'opacity-0 pointer-events-none'
         }`}
+        style={{ backgroundColor: '#000000' }}
       >
-        <div className="flex flex-col items-center justify-center h-full gap-10">
-          <Link
-            href="/products"
-            onClick={() => setMobileOpen(false)}
-            className="text-2xl font-display font-bold tracking-wider text-white/80 hover:text-white transition-colors"
+        <div className="flex flex-col justify-between h-full pt-28 pb-12 px-8">
+          {/* Navigation Links */}
+          <div className="flex flex-col gap-2">
+            {navLinks.map((link, i) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className={`group flex items-center justify-between py-5 border-b border-white/10 transition-all duration-300 ${
+                  mobileOpen
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-4 opacity-0'
+                }`}
+                style={{ transitionDelay: mobileOpen ? `${(i + 1) * 80}ms` : '0ms' }}
+              >
+                <div>
+                  <span className="block text-2xl font-display font-bold tracking-wide text-white group-hover:text-white/80 transition-colors">
+                    {link.label}
+                  </span>
+                  <span className="block text-xs text-white/40 mt-1 tracking-wide">
+                    {link.desc}
+                  </span>
+                </div>
+                <ArrowRight className="w-5 h-5 text-white/30 group-hover:text-white group-hover:translate-x-1 transition-all" />
+              </Link>
+            ))}
+          </div>
+
+          {/* Bottom CTA */}
+          <div
+            className={`transition-all duration-300 ${
+              mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+            }`}
+            style={{ transitionDelay: mobileOpen ? '350ms' : '0ms' }}
           >
-            Produkte
-          </Link>
-          <Link
-            href="/#why"
-            onClick={() => setMobileOpen(false)}
-            className="text-2xl font-display font-bold tracking-wider text-white/80 hover:text-white transition-colors"
-          >
-            Über uns
-          </Link>
-          <Link
-            href="/#faq"
-            onClick={() => setMobileOpen(false)}
-            className="text-2xl font-display font-bold tracking-wider text-white/80 hover:text-white transition-colors"
-          >
-            FAQ
-          </Link>
+            <Link
+              href="/products"
+              onClick={() => setMobileOpen(false)}
+              className="block w-full py-4 bg-white text-black text-center font-bold text-sm tracking-wider rounded-full hover:bg-white/90 transition-colors"
+            >
+              JETZT ENTDECKEN
+            </Link>
+            <p className="text-center text-white/30 text-xs mt-4 tracking-wide">
+              Premium Männer-Skincare aus der Schweiz
+            </p>
+          </div>
         </div>
       </div>
     </>
