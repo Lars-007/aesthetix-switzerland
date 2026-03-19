@@ -16,9 +16,9 @@ export default async function WiderrufsrechtPage() {
       {policy?.body ? (
         <div
           className="prose prose-invert max-w-none
-            prose-headings:font-display prose-headings:tracking-wide
-            prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-4
-            prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3
+            prose-headings:font-sans prose-headings:font-semibold prose-headings:normal-case prose-headings:tracking-normal
+            prose-h2:text-lg prose-h2:mt-8 prose-h2:mb-3
+            prose-h3:text-base prose-h3:mt-6 prose-h3:mb-2
             prose-p:text-white/70 prose-p:leading-relaxed prose-p:text-sm prose-p:md:text-base
             prose-li:text-white/70 prose-li:text-sm prose-li:md:text-base
             prose-strong:text-white prose-strong:font-semibold
