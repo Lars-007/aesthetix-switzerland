@@ -17,7 +17,7 @@ export default async function VersandPage() {
           />
         ) : (
           <p>
-            Wir verpflichten uns zu schnellem und zuverlässigem Versand innerhalb der Schweiz. (Bitte fülle diesen Text im Shopify Admin unter Einstellungen -> Richtlinien aus, dann erscheint er automatisch hier.)
+            Richtlinien werden automatisch aus Shopify geladen. Bitte im Shopify Admin unter Einstellungen {'->'} Richtlinien ausfüllen.
           </p>
         )}
       </div>

@@ -17,7 +17,7 @@ export default async function DatenschutzPage() {
           />
         ) : (
           <p>
-            Wir freuen uns über Ihr Interesse an unserer Website. Der Schutz Ihrer Privatsphäre ist für uns sehr wichtig. (Bitte fülle diesen Text im Shopify Admin unter Einstellungen -> Richtlinien aus, dann erscheint er automatisch hier.)
+            Richtlinien werden automatisch aus Shopify geladen. Bitte im Shopify Admin unter Einstellungen {'->'} Richtlinien ausfüllen.
           </p>
         )}
       </div>

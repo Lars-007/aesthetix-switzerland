@@ -17,7 +17,7 @@ export default async function AGBPage() {
           />
         ) : (
           <p>
-            Willkommen bei AESTHETIX SWITZERLAND. Diese Allgemeinen Geschäftsbedingungen regeln die Geschäftsbeziehungen zwischen uns und unseren Kunden. (Bitte fülle diesen Text im Shopify Admin unter Einstellungen -> Richtlinien aus, dann erscheint er automatisch hier.)
+            Richtlinien werden automatisch aus Shopify geladen. Bitte im Shopify Admin unter Einstellungen {'->'} Richtlinien ausfüllen.
           </p>
         )}
       </div>

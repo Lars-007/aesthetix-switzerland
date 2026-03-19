@@ -17,7 +17,7 @@ export default async function WiderrufsrechtPage() {
           />
         ) : (
           <p>
-            Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen. (Bitte fülle diesen Text im Shopify Admin unter Einstellungen -> Richtlinien aus, dann erscheint er automatisch hier.)
+            Richtlinien werden automatisch aus Shopify geladen. Bitte im Shopify Admin unter Einstellungen {'->'} Richtlinien ausfüllen.
           </p>
         )}
       </div>
