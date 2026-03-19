@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
 
 const headlines = [
   'Master Your Appearance.',
@@ -70,7 +69,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
         <div className="mb-8">
           <span className="inline-block text-[10px] tracking-[0.4em] uppercase text-white/30 font-medium border border-white/10 rounded-full px-5 py-2">
-            Premium Männer-Skincare
+            FACIAL OPTIMIZATION FOR MEN
           </span>
         </div>
 
@@ -85,18 +84,19 @@ export default function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
+          <a
             href="/products"
             className="group bg-white text-black font-bold px-10 py-4 rounded-full text-sm tracking-wider hover:bg-white/90 transition-all duration-300 btn-primary"
           >
-            JETZT ENTDECKEN
-          </Link>
-          <Link
-            href="/#how"
+            UPGRADE YOUR LOOK
+          </a>
+          <a
+            href="#mission"
+            onClick={(e) => { e.preventDefault(); document.getElementById('mission')?.scrollIntoView({ behavior: 'smooth' }); }}
             className="text-sm text-white/40 hover:text-white tracking-wider transition-colors duration-300 border border-white/10 hover:border-white/30 px-10 py-4 rounded-full"
           >
-            MEHR ERFAHREN
-          </Link>
+            DAS KONZEPT
+          </a>
         </div>
       </div>
 

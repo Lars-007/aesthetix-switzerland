@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { ShoppingBag, Menu, X, ArrowRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useCartStore } from '@/store/cart';
@@ -28,11 +27,22 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   const navLinks = [
-    { href: '#shop', label: 'Shop', desc: 'Unsere Bestseller' },
-    { href: '#mission', label: 'Mission', desc: 'Warum AESTHETIX wirkt' },
-    { href: '#faq', label: 'FAQ', desc: 'Häufige Fragen' },
-    { href: '#kontakt', label: 'Kontakt', desc: 'Schreib uns' },
+    { href: '/products', label: 'Shop', desc: 'Alle Produkte', isPage: true },
+    { href: '#mission', label: 'Konzept', desc: 'Warum AESTHETIX wirkt', isPage: false },
+    { href: '#faq', label: 'FAQ', desc: 'Häufige Fragen', isPage: false },
+    { href: '#kontakt', label: 'Kontakt', desc: 'Schreib uns', isPage: false },
   ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: typeof navLinks[0]) => {
+    setMobileOpen(false);
+    if (link.isPage) return; // let browser navigate normally
+    e.preventDefault();
+    const id = link.href.replace('#', '');
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <>
@@ -46,21 +56,26 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group relative z-50">
+            <a
+              href="#"
+              onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              className="flex items-center gap-3 group relative z-50 cursor-pointer"
+            >
               <span className="font-display text-lg md:text-xl font-bold tracking-wider text-white">
                 AESTHETIX
               </span>
               <span className="hidden sm:inline text-[10px] tracking-[0.3em] text-white/40 uppercase font-light border-l border-white/10 pl-3">
                 Switzerland
               </span>
-            </Link>
+            </a>
 
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-10">
+            {/* Desktop Nav — pushed right with ml-auto + gap to cart */}
+            <div className="hidden md:flex items-center gap-8 ml-auto mr-6">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
+                  onClick={(e) => handleNavClick(e, link)}
                   className="text-sm text-white/60 hover:text-white transition-colors duration-300 tracking-wide"
                 >
                   {link.label}
@@ -110,7 +125,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => setMobileOpen(false)}
+                onClick={(e) => handleNavClick(e, link)}
                 className={`group flex items-center justify-between py-5 border-b border-white/10 transition-all duration-300 ${
                   mobileOpen
                     ? 'translate-y-0 opacity-100'
@@ -139,14 +154,14 @@ export default function Navbar() {
             style={{ transitionDelay: mobileOpen ? '350ms' : '0ms' }}
           >
             <a
-              href="#shop"
+              href="/products"
               onClick={() => setMobileOpen(false)}
               className="block w-full py-4 bg-white text-black text-center font-bold text-sm tracking-wider rounded-full hover:bg-white/90 transition-colors"
             >
-              JETZT ENTDECKEN
+              UPGRADE YOUR LOOK
             </a>
             <p className="text-center text-white/30 text-xs mt-4 tracking-wide">
-              Premium Männer-Skincare aus der Schweiz
+              Facial Optimization for Men
             </p>
           </div>
         </div>
