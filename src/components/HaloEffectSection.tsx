@@ -104,6 +104,7 @@ export default function HaloEffectSection() {
 
   return (
     <section
+      id="mission"
       ref={sectionRef}
       className="py-24 md:py-32 bg-black/50 border-y border-white/5 relative overflow-hidden"
     >

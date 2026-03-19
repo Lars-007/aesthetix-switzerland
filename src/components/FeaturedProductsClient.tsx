@@ -14,7 +14,7 @@ export default function FeaturedProductsClient({ products }: { products: Shopify
   }
 
   return (
-    <section ref={ref} className="reveal py-24 md:py-32">
+    <section id="shop" ref={ref} className="reveal py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-end justify-between mb-14">
           <div>

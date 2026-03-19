@@ -28,9 +28,10 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   const navLinks = [
-    { href: '/products', label: 'Produkte', desc: 'Unsere Bestseller' },
-    { href: '/#why', label: 'Über uns', desc: 'Unsere Mission' },
-    { href: '/#faq', label: 'FAQ', desc: 'Häufige Fragen' },
+    { href: '#shop', label: 'Shop', desc: 'Unsere Bestseller' },
+    { href: '#mission', label: 'Mission', desc: 'Warum AESTHETIX wirkt' },
+    { href: '#faq', label: 'FAQ', desc: 'Häufige Fragen' },
+    { href: '#kontakt', label: 'Kontakt', desc: 'Schreib uns' },
   ];
 
   return (
@@ -56,15 +57,15 @@ export default function Navbar() {
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-10">
-              <Link href="/products" className="text-sm text-white/60 hover:text-white transition-colors duration-300 tracking-wide">
-                Produkte
-              </Link>
-              <Link href="/#why" className="text-sm text-white/60 hover:text-white transition-colors duration-300 tracking-wide">
-                Über uns
-              </Link>
-              <Link href="/#faq" className="text-sm text-white/60 hover:text-white transition-colors duration-300 tracking-wide">
-                FAQ
-              </Link>
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm text-white/60 hover:text-white transition-colors duration-300 tracking-wide"
+                >
+                  {link.label}
+                </a>
+              ))}
             </div>
 
             {/* Right side */}
@@ -106,7 +107,7 @@ export default function Navbar() {
           {/* Navigation Links */}
           <div className="flex flex-col gap-2">
             {navLinks.map((link, i) => (
-              <Link
+              <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
@@ -126,7 +127,7 @@ export default function Navbar() {
                   </span>
                 </div>
                 <ArrowRight className="w-5 h-5 text-white/30 group-hover:text-white group-hover:translate-x-1 transition-all" />
-              </Link>
+              </a>
             ))}
           </div>
 
@@ -137,13 +138,13 @@ export default function Navbar() {
             }`}
             style={{ transitionDelay: mobileOpen ? '350ms' : '0ms' }}
           >
-            <Link
-              href="/products"
+            <a
+              href="#shop"
               onClick={() => setMobileOpen(false)}
               className="block w-full py-4 bg-white text-black text-center font-bold text-sm tracking-wider rounded-full hover:bg-white/90 transition-colors"
             >
               JETZT ENTDECKEN
-            </Link>
+            </a>
             <p className="text-center text-white/30 text-xs mt-4 tracking-wide">
               Premium Männer-Skincare aus der Schweiz
             </p>
