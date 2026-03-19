@@ -150,6 +150,51 @@ export async function getProduct(handle: string): Promise<ShopifyProduct | null>
   return data.productByHandle;
 }
 
+export interface ShopifyPolicy {
+  title: string;
+  body: string;
+}
+
+export async function getShopPolicies(): Promise<{
+  privacyPolicy: ShopifyPolicy | null;
+  shippingPolicy: ShopifyPolicy | null;
+  termsOfService: ShopifyPolicy | null;
+  refundPolicy: ShopifyPolicy | null;
+}> {
+  const data = await shopifyFetch<{
+    shop: {
+      privacyPolicy: ShopifyPolicy | null;
+      shippingPolicy: ShopifyPolicy | null;
+      termsOfService: ShopifyPolicy | null;
+      refundPolicy: ShopifyPolicy | null;
+    }
+  }>(`
+    query {
+      shop {
+        privacyPolicy { title body }
+        shippingPolicy { title body }
+        termsOfService { title body }
+        refundPolicy { title body }
+      }
+    }
+  `);
+  return data.shop;
+}
+
+export async function getShopPage(handle: string): Promise<ShopifyPolicy | null> {
+  const data = await shopifyFetch<{
+    page: ShopifyPolicy | null;
+  }>(`
+    query getPage($handle: String!) {
+      page(handle: $handle) {
+        title
+        body
+      }
+    }
+  `, { handle });
+  return data.page;
+}
+
 export async function createCheckout(lineItems: { variantId: string; quantity: number }[]): Promise<string> {
   const data = await shopifyFetch<{
     cartCreate: {
