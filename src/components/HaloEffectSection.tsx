@@ -22,7 +22,7 @@ const blocks = [
   {
     icon: Briefcase,
     accentIcon: TrendingUp,
-    title: 'Beauty Premium',
+    title: 'Erfolgreicher im Arbeitsleben',
     stat: '+15%',
     statLabel: 'mehr Gehalt',
     description: 'Studien zeigen: Attraktivere Menschen verdienen messbar mehr und werden schneller befördert.',
@@ -50,7 +50,7 @@ const blocks = [
   {
     icon: UserCheck,
     accentIcon: Zap,
-    title: 'Selbstvertrauen',
+    title: 'Mehr Selbstvertrauen',
     stat: '100%',
     statLabel: 'Confidence-Boost',
     description: 'Look good, feel good — ein positiver Feedback-Loop, der dein gesamtes Auftreten verändert.',
@@ -64,31 +64,24 @@ const blocks = [
 ];
 
 const cardVariants = {
-  hiddenLeft: { opacity: 0, x: -80, y: 20 },
-  hiddenRight: { opacity: 0, x: 80, y: 20 },
+  hidden: { opacity: 0, y: 15 },
   visible: {
     opacity: 1,
-    x: 0,
     y: 0,
     transition: {
-      type: 'spring' as const,
-      damping: 25,
-      stiffness: 120,
-      duration: 0.8,
+      duration: 0.4,
+      ease: 'easeOut',
     },
   },
 };
 
 const statVariants = {
-  hidden: { opacity: 0, scale: 0.5 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    scale: 1,
     transition: {
-      type: 'spring' as const,
-      damping: 15,
-      stiffness: 200,
-      delay: 0.3,
+      duration: 0.3,
+      delay: 0.2,
     },
   },
 };
@@ -146,9 +139,9 @@ export default function HaloEffectSection() {
             <motion.div
               key={block.title}
               variants={cardVariants}
-              initial={block.direction === 'left' ? 'hiddenLeft' : 'hiddenRight'}
+              initial="hidden"
               animate={isInView ? 'visible' : undefined}
-              transition={{ delay: i * 0.15 }}
+              transition={{ delay: i * 0.08 }}
               className="group relative bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-sm rounded-2xl border border-white/10 p-7 md:p-8 hover:border-white/20 transition-all duration-500 hover:from-white/[0.08] hover:to-white/[0.04]"
             >
               {/* Top row: icon + stat */}

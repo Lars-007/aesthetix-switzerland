@@ -54,8 +54,8 @@ function AnimatedCounter({ end, suffix, prefix = '', duration = 2000 }: CounterP
 }
 
 const stats = [
-  { end: 2400, suffix: '+', label: 'Zufriedene Kunden' },
-  { end: 4.9, suffix: '★', label: 'Bewertung', isDecimal: true },
+  { end: 1200, suffix: '+', label: 'Zufriedene Kunden' },
+  { end: 4.8, suffix: '★', label: 'Bewertung', isDecimal: true },
   { end: 48, suffix: 'h', label: 'Lieferung Schweiz' },
   { end: 100, suffix: '%', label: 'Naturbasiert' },
 ];

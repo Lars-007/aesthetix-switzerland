@@ -8,19 +8,19 @@ const testimonials = [
   {
     name: 'Luca M.',
     location: 'Zürich',
-    text: 'Regelmässig Komplimente für meine Haut. Die Jawline Mask ist ein absoluter Game-Changer.',
+    text: 'Die Tinted Sunscreen funktioniert sofort und meine Haut sieht direk viel gebärunter aus und es schützt auch noch vor der Sonne was noch ein guter bonus ist. Der Preis ist etwas teurer aber ich finde es lohnt sich wenn man ein hochwertiges Produkt will.',
     rating: 5,
   },
   {
     name: 'David K.',
-    location: 'Bern',
-    text: 'Endlich Männer-Skincare, die wirkt. Spürbare Qualität, sichtbare Resultate nach 3 Monaten.',
-    rating: 5,
+    location: 'St. Gallen',
+    text: 'Gute Produkte mit coolem und ästetischem Design für Männer die keine "frauen" Skincare benutzen wollen.',
+    rating: 4,
   },
   {
     name: 'Noah S.',
-    location: 'Basel',
-    text: 'Vulkan-Peeling + Niacinamid Gel = perfekte Kombi. Mein Hautbild hat sich komplett verändert.',
+    location: 'Lausanne',
+    text: 'Enfin, il existe d\'excellents soins pour la peau spécialement conçus pour les hommes. Je recommande vivement ma crème solaire teintée.',
     rating: 5,
   },
 ];
@@ -56,8 +56,11 @@ export default function Testimonials() {
               className="bg-bg-raised rounded-2xl border border-white/5 p-8 transition-all duration-500 hover:border-white/10"
             >
               <div className="flex gap-1 mb-5">
-                {Array.from({ length: t.rating }).map((_, j) => (
-                  <Star key={j} className="w-4 h-4 fill-white text-white" />
+                {Array.from({ length: 5 }).map((_, j) => (
+                  <Star
+                    key={j}
+                    className={`w-4 h-4 ${j < t.rating ? 'fill-white text-white' : 'text-white/20'}`}
+                  />
                 ))}
               </div>
               <p className="text-sm text-white/60 leading-relaxed mb-6">

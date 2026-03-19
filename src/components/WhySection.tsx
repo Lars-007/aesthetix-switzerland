@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Shield, Flame, Eye } from 'lucide-react';
+import { Shield, Leaf, Eye } from 'lucide-react';
 
 const reasons = [
   {
@@ -11,9 +11,9 @@ const reasons = [
     description: 'Pures Niacinamid & Mineralien. Keine Füllstoffe, keine Kompromisse.',
   },
   {
-    icon: Flame,
-    title: 'Der Halo-Effekt',
-    description: 'Besseres Aussehen = sofortiger Respekt und mehr Vertrauen.',
+    icon: Leaf,
+    title: 'Naturbasierte Inhaltsstoffe',
+    description: 'Vulkanische Mineralien, Niacinamid & natürliche Wirkstoffe — keine synthetischen Füllstoffe.',
   },
   {
     icon: Eye,
