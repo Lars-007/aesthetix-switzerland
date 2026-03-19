@@ -30,7 +30,7 @@ export default function Navbar() {
     { href: '/products', label: 'Shop', desc: 'Alle Produkte', isPage: true },
     { href: '#mission', label: 'Konzept', desc: 'Warum AESTHETIX wirkt', isPage: false },
     { href: '#faq', label: 'FAQ', desc: 'Häufige Fragen', isPage: false },
-    { href: '#kontakt', label: 'Kontakt', desc: 'Schreib uns', isPage: false },
+    { href: '/kontakt', label: 'Kontakt', desc: 'Schreib uns', isPage: true },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: typeof navLinks[0]) => {
