@@ -38,9 +38,14 @@ export default function Navbar() {
     if (link.isPage) return; // let browser navigate normally
     e.preventDefault();
     const id = link.href.replace('#', '');
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+    if (window.location.pathname !== '/') {
+      // On a subpage → navigate to homepage with hash
+      window.location.href = '/' + link.href;
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
