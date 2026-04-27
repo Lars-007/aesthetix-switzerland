@@ -1,12 +1,15 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 const headlines = [
   'Master Your Appearance.',
   'Dominate Every Room.',
-  'Unlock Your Potential.',
-  'Optimize Your Looks.',
+  'Engineer Your Edge.',
+  'Refine The Reflection.',
   'Elevate Your Presence.',
 ];
 
@@ -22,7 +25,6 @@ export default function Hero() {
 
   const tick = useCallback(() => {
     const fullText = headlines[currentIndex];
-
     if (isWaiting) return;
 
     if (!isDeleting) {
@@ -49,62 +51,110 @@ export default function Hero() {
   }, [tick, isDeleting]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-black">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg">
+      {/* Background image */}
+      <div className="absolute inset-0">
         <div
-          className="absolute inset-0 opacity-40"
+          className="absolute inset-0 opacity-50"
           style={{
             backgroundImage: 'url(/hero.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center top',
           }}
         />
-        {/* Gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
+        {/* Gradient atmosphere */}
+        <div className="absolute inset-0 bg-gradient-to-b from-bg/50 via-bg/30 to-bg" />
+        <div className="absolute inset-0 bg-gradient-to-r from-bg/70 via-transparent to-bg/70" />
+
+        {/* Champagne glow */}
+        <div className="hero-glow w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-glow-pulse" />
+      </div>
+
+      {/* Side editorial markers — desktop only */}
+      <div className="hidden lg:flex absolute top-1/2 left-8 -translate-y-1/2 flex-col items-start gap-3 z-10">
+        <span className="font-mono text-[10px] tracking-[0.3em] text-accent/70 [writing-mode:vertical-rl] rotate-180">
+          EST · 2025 · CH
+        </span>
+        <div className="w-px h-24 bg-gradient-to-b from-accent/40 to-transparent" />
+      </div>
+      <div className="hidden lg:flex absolute top-1/2 right-8 -translate-y-1/2 flex-col items-end gap-3 z-10">
+        <div className="w-px h-24 bg-gradient-to-t from-accent/40 to-transparent" />
+        <span className="font-mono text-[10px] tracking-[0.3em] text-accent/70 [writing-mode:vertical-rl]">
+          VOL · 01 · LOOKMAX
+        </span>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        <div className="mb-8">
-          <span className="inline-block text-[10px] tracking-[0.4em] uppercase text-white/30 font-medium border border-white/10 rounded-full px-5 py-2">
-            FACIAL OPTIMIZATION FOR MEN
+      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-8"
+        >
+          <span className="inline-flex items-center gap-3 text-[10px] tracking-[0.4em] uppercase text-bone/60 font-medium border border-white/10 rounded-full px-5 py-2 backdrop-blur-md bg-white/[0.02]">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            Facial Optimization · Engineered in Switzerland
           </span>
-        </div>
+        </motion.div>
 
-        <h1 className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] mb-8 min-h-[1.2em]">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          className="display-heading text-[14vw] sm:text-[12vw] md:text-[10vw] lg:text-8xl xl:text-9xl font-bold leading-[0.9] mb-10 min-h-[1em] text-bone"
+        >
           <span>{displayText}</span>
-          <span className="animate-blink font-thin text-white/50">|</span>
-        </h1>
+          <span className="font-thin text-accent animate-blink">|</span>
+        </motion.h1>
 
-        <p className="text-base sm:text-lg text-white/50 max-w-xl mx-auto mb-12 leading-relaxed">
-          Verbessere dein Aussehen mit hochwertigen AESTHETIX Produkten.
-          Entwickelt in der Schweiz für den modernen Mann.
-        </p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="text-base sm:text-lg text-bone/55 max-w-xl mx-auto mb-14 leading-relaxed font-light"
+        >
+          Hochwertige Männer-Skincare aus der Schweiz.
+          <span className="block text-bone/40 mt-2">
+            Jedes Produkt ein Werkzeug. Jeder Schritt ein Upgrade.
+          </span>
+        </motion.p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <Link
             href="/products"
-            className="group bg-white text-black font-bold px-10 py-4 rounded-full text-sm tracking-wider hover:bg-white/90 transition-all duration-300 btn-primary"
+            className="group inline-flex items-center gap-3 bg-bone text-bg font-bold px-10 py-4 rounded-full text-[13px] tracking-[0.2em] hover:bg-accent transition-all duration-500 btn-primary"
           >
             UPGRADE YOUR LOOK
-          </a>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+          </Link>
           <a
             href="#mission"
             onClick={(e) => { e.preventDefault(); document.getElementById('mission')?.scrollIntoView({ behavior: 'smooth' }); }}
-            className="text-sm text-white/40 hover:text-white tracking-wider transition-colors duration-300 border border-white/10 hover:border-white/30 px-10 py-4 rounded-full"
+            className="text-[13px] text-bone/55 hover:text-accent tracking-[0.2em] transition-all duration-300 border border-white/10 hover:border-accent/40 px-10 py-4 rounded-full"
           >
             DAS KONZEPT
           </a>
-        </div>
+        </motion.div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <span className="text-[10px] tracking-[0.3em] uppercase text-white/20">Scroll</span>
-        <div className="w-px h-10 bg-gradient-to-b from-white/20 to-transparent" />
-      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.2 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+      >
+        <span className="text-[9px] font-mono tracking-[0.4em] uppercase text-bone/30">
+          Scroll
+        </span>
+        <div className="w-px h-12 bg-gradient-to-b from-accent/40 to-transparent" />
+      </motion.div>
     </section>
   );
 }

@@ -9,7 +9,7 @@ interface CounterProps {
   duration?: number;
 }
 
-function AnimatedCounter({ end, suffix, prefix = '', duration = 2000 }: CounterProps) {
+function AnimatedCounter({ end, suffix, prefix = '', duration = 2200 }: CounterProps) {
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -17,9 +17,7 @@ function AnimatedCounter({ end, suffix, prefix = '', duration = 2000 }: CounterP
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !started) {
-          setStarted(true);
-        }
+        if (entry.isIntersecting && !started) setStarted(true);
       },
       { threshold: 0.5 }
     );
@@ -29,9 +27,8 @@ function AnimatedCounter({ end, suffix, prefix = '', duration = 2000 }: CounterP
 
   useEffect(() => {
     if (!started) return;
-    const start = 0;
     const increment = end / (duration / 16);
-    let current = start;
+    let current = 0;
     const timer = setInterval(() => {
       current += increment;
       if (current >= end) {
@@ -45,39 +42,12 @@ function AnimatedCounter({ end, suffix, prefix = '', duration = 2000 }: CounterP
   }, [started, end, duration]);
 
   return (
-    <div ref={ref} className="text-center">
-      <div className="font-display text-3xl md:text-4xl font-bold mb-1">
-        {prefix}{count.toLocaleString('de-CH')}{suffix}
+    <div ref={ref}>
+      <div className="stat-number text-5xl md:text-7xl text-bone">
+        {prefix}{count.toLocaleString('de-CH')}
+        <span className="text-accent">{suffix}</span>
       </div>
     </div>
-  );
-}
-
-const stats = [
-  { end: 1200, suffix: '+', label: 'Zufriedene Kunden' },
-  { end: 4.8, suffix: '★', label: 'Bewertung', isDecimal: true },
-  { end: 48, suffix: 'h', label: 'Lieferung Schweiz' },
-  { end: 100, suffix: '%', label: 'Naturbasiert' },
-];
-
-export default function StatsBanner() {
-  return (
-    <section className="bg-black border-y border-white/5 py-14">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
-          {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              {stat.isDecimal ? (
-                <DecimalCounter end={stat.end} suffix={stat.suffix} />
-              ) : (
-                <AnimatedCounter end={stat.end} suffix={stat.suffix} />
-              )}
-              <p className="text-xs text-white/30 tracking-wider uppercase mt-2">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -99,7 +69,7 @@ function DecimalCounter({ end, suffix }: { end: number; suffix: string }) {
 
   useEffect(() => {
     if (!started) return;
-    const duration = 2000;
+    const duration = 2200;
     const increment = end / (duration / 16);
     let current = 0;
     const timer = setInterval(() => {
@@ -116,9 +86,53 @@ function DecimalCounter({ end, suffix }: { end: number; suffix: string }) {
 
   return (
     <div ref={ref}>
-      <div className="font-display text-3xl md:text-4xl font-bold mb-1">
-        {count.toFixed(1)}{suffix}
+      <div className="stat-number text-5xl md:text-7xl text-bone">
+        {count.toFixed(1)}
+        <span className="text-accent">{suffix}</span>
       </div>
     </div>
+  );
+}
+
+const stats = [
+  { end: 1200, suffix: '+', label: 'Zufriedene Kunden' },
+  { end: 4.8, suffix: '★', label: 'Bewertung', isDecimal: true },
+  { end: 48, suffix: 'h', label: 'Lieferung Schweiz' },
+  { end: 100, suffix: '%', label: 'Naturbasiert' },
+];
+
+export default function StatsBanner() {
+  return (
+    <section className="relative bg-bg border-y border-white/5 py-20 md:py-24 overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage:
+            'linear-gradient(to right, #C9A37A 1px, transparent 1px), linear-gradient(to bottom, #C9A37A 1px, transparent 1px)',
+          backgroundSize: '80px 80px',
+        }}
+      />
+
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="text-center mb-14">
+          <span className="eyebrow-accent">Numbers Don&apos;t Lie</span>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-12 md:gap-y-0 md:divide-x md:divide-white/5">
+          {stats.map((stat, i) => (
+            <div key={stat.label} className={`text-center px-4 ${i === 0 ? 'md:pl-0' : ''}`}>
+              {stat.isDecimal ? (
+                <DecimalCounter end={stat.end} suffix={stat.suffix} />
+              ) : (
+                <AnimatedCounter end={stat.end} suffix={stat.suffix} />
+              )}
+              <p className="text-[10px] text-bone/40 tracking-[0.3em] uppercase mt-4 font-medium">
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

@@ -7,16 +7,19 @@ import { Shield, Leaf, Eye } from 'lucide-react';
 const reasons = [
   {
     icon: Shield,
+    index: '01',
     title: 'Schweizer Qualität',
     description: 'Pures Niacinamid & Mineralien. Keine Füllstoffe, keine Kompromisse.',
   },
   {
     icon: Leaf,
+    index: '02',
     title: 'Naturbasierte Inhaltsstoffe',
     description: 'Vulkanische Mineralien, Niacinamid & natürliche Wirkstoffe — keine synthetischen Füllstoffe.',
   },
   {
     icon: Eye,
+    index: '03',
     title: 'Sichtbare Resultate',
     description: 'Schärfere Jawline, reinere Haut — messbar mehr Erfolg.',
   },
@@ -27,36 +30,58 @@ export default function WhySection() {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="why" ref={ref} className="py-20 md:py-28">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section id="why" ref={ref} className="py-28 md:py-36 bg-bg-raised relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-bg/50 via-transparent to-bg/50 pointer-events-none" />
+
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
         <motion.div
-          className="text-center mb-12"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
         >
-          <span className="text-[10px] tracking-[0.3em] uppercase text-white/50 font-medium">
-            Dein Vorteil
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mt-3 text-white">
-            Warum AESTHETIX?
-          </h2>
+          <div className="lg:col-span-5">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="section-index">— 04 / Vorteile</span>
+              <div className="hairline w-24" />
+            </div>
+            <h2 className="display-heading text-4xl md:text-6xl lg:text-7xl text-bone">
+              Warum<br />
+              <span className="italic font-medium text-accent">AESTHETIX?</span>
+            </h2>
+          </div>
+
+          <div className="lg:col-span-6 lg:col-start-7 flex items-end">
+            <p className="text-bone/55 text-base md:text-lg leading-relaxed font-light">
+              Drei Prinzipien. Keine Kompromisse. Wir entwickeln Skincare-Tools mit der gleichen Präzision wie Schweizer Uhren —
+              <span className="text-accent"> kompromisslos auf Wirkung getrimmt.</span>
+            </p>
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {reasons.map((reason, i) => (
             <motion.div
               key={reason.title}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: i * 0.12 }}
-              className="group bg-bg-raised rounded-2xl border border-white/5 hover:border-white/10 p-8 transition-all duration-500 text-center"
+              transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative bg-bg-card rounded-2xl border border-white/8 hover:border-accent/30 p-8 md:p-10 transition-all duration-700 ease-editorial overflow-hidden"
             >
-              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-5 mx-auto group-hover:bg-white/20 group-hover:scale-110 transition-all duration-500">
-                <reason.icon className="w-5 h-5 text-white/80" />
+              <span className="absolute top-6 right-7 font-mono text-[11px] text-accent/40 tracking-widest">
+                {reason.index}
+              </span>
+
+              <div className="w-14 h-14 bg-accent-glow border border-accent/20 rounded-xl flex items-center justify-center mb-7 group-hover:border-accent/50 group-hover:scale-110 transition-all duration-700">
+                <reason.icon className="w-5 h-5 text-accent" />
               </div>
-              <h3 className="text-lg font-bold mb-2 text-white">{reason.title}</h3>
-              <p className="text-sm text-white/60 leading-relaxed">{reason.description}</p>
+
+              <h3 className="display-heading text-2xl md:text-3xl mb-3 text-bone">{reason.title}</h3>
+              <p className="text-sm text-bone/55 leading-relaxed font-light">{reason.description}</p>
+
+              <div className="mt-6 pt-6 border-t border-white/5">
+                <div className="h-[2px] w-12 bg-accent/40 group-hover:w-full group-hover:bg-accent transition-all duration-700 ease-editorial" />
+              </div>
             </motion.div>
           ))}
         </div>
