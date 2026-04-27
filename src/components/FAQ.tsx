@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useScrollReveal } from '@/lib/hooks';
 
 const faqs = [
@@ -32,43 +32,59 @@ export default function FAQ() {
   const ref = useScrollReveal();
 
   return (
-    <section id="faq" ref={ref} className="reveal py-24 md:py-32">
-      <div className="max-w-3xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <span className="text-[10px] tracking-[0.3em] uppercase text-white/30 font-medium">
-            Fragen & Antworten
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mt-3">
-            FAQ
+    <section id="faq" ref={ref} className="reveal py-28 md:py-36 bg-bg">
+      <div className="max-w-4xl mx-auto px-6 lg:px-10">
+        <div className="text-center mb-14">
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="hairline w-24" />
+            <span className="section-index">— 07 / FAQ</span>
+            <div className="hairline w-24" />
+          </div>
+          <h2 className="display-heading text-4xl md:text-6xl lg:text-7xl text-bone">
+            Fragen & <span className="italic font-medium text-accent">Antworten.</span>
           </h2>
         </div>
 
         <div className="flex flex-col gap-3">
-          {faqs.map((faq, i) => (
-            <div
-              key={i}
-              className="bg-bg-raised rounded-xl border border-white/5 overflow-hidden transition-all duration-300 hover:border-white/10"
-            >
-              <button
-                onClick={() => setOpen(open === i ? null : i)}
-                className="w-full flex items-center justify-between px-6 py-5 text-left"
-              >
-                <span className="text-sm font-semibold pr-4">{faq.q}</span>
-                <ChevronDown
-                  className={`w-4 h-4 text-white/30 flex-shrink-0 transition-transform duration-300 ${
-                    open === i ? 'rotate-180' : ''
-                  }`}
-                />
-              </button>
+          {faqs.map((faq, i) => {
+            const isOpen = open === i;
+            return (
               <div
-                className={`overflow-hidden transition-all duration-300 ${
-                  open === i ? 'max-h-96 pb-6' : 'max-h-0'
+                key={i}
+                className={`bg-bg-raised rounded-xl border overflow-hidden transition-all duration-500 ease-editorial ${
+                  isOpen ? 'border-accent/30' : 'border-white/8 hover:border-white/15'
                 }`}
               >
-                <p className="px-6 text-sm text-white/40 leading-relaxed">{faq.a}</p>
+                <button
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="w-full flex items-center gap-4 px-6 md:px-8 py-6 text-left"
+                >
+                  <span className="font-mono text-[11px] text-accent/50 tracking-wider flex-shrink-0">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="text-[15px] font-medium pr-4 flex-1 text-bone">{faq.q}</span>
+                  <span
+                    className={`flex-shrink-0 w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-500 ${
+                      isOpen
+                        ? 'bg-accent border-accent rotate-45'
+                        : 'border-white/15'
+                    }`}
+                  >
+                    <Plus className={`w-4 h-4 transition-colors duration-300 ${isOpen ? 'text-bg' : 'text-bone/60'}`} />
+                  </span>
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-500 ease-editorial ${
+                    isOpen ? 'max-h-[500px] pb-7' : 'max-h-0'
+                  }`}
+                >
+                  <p className="px-6 md:px-8 pl-14 md:pl-16 text-[14px] text-bone/55 leading-relaxed font-light max-w-3xl">
+                    {faq.a}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

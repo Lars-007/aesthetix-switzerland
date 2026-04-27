@@ -1,4 +1,5 @@
 import Hero from '@/components/Hero';
+import Marquee from '@/components/Marquee';
 import StatsBanner from '@/components/StatsBanner';
 import FeaturedProducts from '@/components/FeaturedProducts';
 import HaloEffectSection from '@/components/HaloEffectSection';
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Marquee />
       <StatsBanner />
       <FeaturedProducts />
       <HaloEffectSection />

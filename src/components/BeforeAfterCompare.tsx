@@ -5,8 +5,6 @@ import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-// Swap these paths once the AI-generated before/after images are added
-// to /public/compare/. Falls back to /hero.png so the slider always renders.
 const BEFORE_SRC = '/compare/before.jpg';
 const AFTER_SRC = '/compare/after.jpg';
 const FALLBACK_SRC = '/hero.png';
@@ -55,32 +53,40 @@ export default function BeforeAfterCompare() {
     <section
       id="results"
       ref={sectionRef}
-      className="py-20 md:py-28 bg-black relative overflow-hidden"
+      className="py-28 md:py-36 bg-bg relative overflow-hidden"
     >
-      <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-8">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-10">
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-14"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
         >
-          <span className="text-[10px] tracking-[0.3em] uppercase text-white/50 font-medium">
-            Echte Resultate
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mt-3 text-white">
-            Sieh den Unterschied
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="hairline w-24" />
+            <span className="section-index">— 03 / Resultate</span>
+            <div className="hairline w-24" />
+          </div>
+          <h2 className="display-heading text-4xl md:text-6xl lg:text-7xl text-bone mb-5">
+            Sieh den<br />
+            <span className="italic font-medium text-accent">Unterschied.</span>
           </h2>
-          <p className="text-white/60 text-base leading-relaxed mt-4 max-w-xl mx-auto">
-            Konsequente Anwendung unterstützt deine Gesichtsstruktur über die Zeit. Ziehe den Regler zum Vergleichen.
+          <p className="text-bone/55 text-base md:text-lg leading-relaxed max-w-xl mx-auto font-light">
+            Konsequente Anwendung unterstützt deine Gesichtsstruktur über die Zeit.
+            <span className="block text-bone/35 mt-1">Ziehe den Regler zum Vergleichen.</span>
           </p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.15 }}
+          transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="relative"
         >
+          {/* Frame */}
+          <div className="absolute -inset-4 md:-inset-6 border border-accent/15 rounded-3xl pointer-events-none" />
+          <div className="absolute -inset-1 md:-inset-2 border border-white/5 rounded-3xl pointer-events-none" />
+
           <div
             ref={containerRef}
             className="relative w-full aspect-[3/4] md:aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-bg-raised select-none touch-none"
@@ -117,16 +123,21 @@ export default function BeforeAfterCompare() {
               />
             </div>
 
+            {/* Divider line — accent gradient */}
             <div
-              className="absolute top-0 bottom-0 w-px bg-white/90 pointer-events-none"
-              style={{ left: `${position}%` }}
+              className="absolute top-0 bottom-0 w-px pointer-events-none"
+              style={{
+                left: `${position}%`,
+                background: 'linear-gradient(to bottom, transparent 0%, #C9A37A 50%, transparent 100%)',
+                boxShadow: '0 0 20px rgba(201, 163, 122, 0.5)',
+              }}
             />
 
             <button
               type="button"
               aria-label="Vergleichs-Regler ziehen"
-              className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-black/70 backdrop-blur-sm border border-white/40 flex items-center justify-center text-white shadow-lg hover:bg-black/80 transition-colors cursor-ew-resize"
-              style={{ left: `${position}%` }}
+              className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-bg/80 backdrop-blur-sm border border-accent/40 flex items-center justify-center text-accent shadow-2xl hover:bg-accent hover:text-bg transition-all duration-300 cursor-ew-resize group"
+              style={{ left: `${position}%`, boxShadow: '0 0 40px rgba(201, 163, 122, 0.4)' }}
               onMouseDown={(e) => {
                 e.stopPropagation();
                 setIsDragging(true);
@@ -140,16 +151,17 @@ export default function BeforeAfterCompare() {
               <ChevronRight className="w-4 h-4 -ml-1" />
             </button>
 
-            <span className="absolute bottom-4 left-4 text-[11px] tracking-[0.2em] uppercase font-medium text-white bg-black/70 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 pointer-events-none">
+            <span className="absolute bottom-5 left-5 text-[10px] tracking-[0.3em] uppercase font-medium text-bone bg-bg/80 backdrop-blur-md rounded-full px-4 py-2 border border-white/10 pointer-events-none">
               Vorher
             </span>
-            <span className="absolute bottom-4 right-4 text-[11px] tracking-[0.2em] uppercase font-medium text-white bg-black/70 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 pointer-events-none">
+            <span className="absolute bottom-5 right-5 text-[10px] tracking-[0.3em] uppercase font-medium text-accent bg-bg/80 backdrop-blur-md rounded-full px-4 py-2 border border-accent/30 pointer-events-none">
               Nachher
             </span>
           </div>
 
-          <p className="text-center text-xs text-white/40 leading-relaxed mt-6 max-w-xl mx-auto">
-            Dargestellte Resultate spiegeln konsequente Langzeitanwendung wider. Entwickelt, um Gesichtsstruktur und Konturen zu unterstützen.
+          <p className="text-center text-xs text-bone/35 leading-relaxed mt-10 max-w-xl mx-auto font-light tracking-wide">
+            Dargestellte Resultate spiegeln konsequente Langzeitanwendung wider.
+            <span className="block">Entwickelt, um Gesichtsstruktur und Konturen zu unterstützen.</span>
           </p>
         </motion.div>
       </div>

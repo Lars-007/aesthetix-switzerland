@@ -3,13 +3,13 @@
 import { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
-import { Star } from 'lucide-react';
+import { Star, Quote } from 'lucide-react';
 
 const testimonials = [
   {
     name: 'Luca M.',
     location: 'Zürich',
-    text: 'Die Tinted Sunscreen funktioniert sofort und meine Haut sieht direk viel gebärunter aus und es schützt auch noch vor der Sonne was noch ein guter bonus ist. Der Preis ist etwas teurer aber ich finde es lohnt sich wenn man ein hochwertiges Produkt will.',
+    text: 'Die Tinted Sunscreen funktioniert sofort und meine Haut sieht direkt viel gebräunter aus und es schützt auch noch vor der Sonne was noch ein guter Bonus ist. Der Preis ist etwas teurer aber ich finde es lohnt sich wenn man ein hochwertiges Produkt will.',
     rating: 5,
     image: '/products/sunscreen-stick.png',
     product: 'Tinted Sunscreen Stick',
@@ -17,7 +17,7 @@ const testimonials = [
   {
     name: 'David K.',
     location: 'St. Gallen',
-    text: 'Gute Produkte mit coolem und ästetischem Design für Männer die keine "frauen" Skincare benutzen wollen.',
+    text: 'Gute Produkte mit coolem und ästhetischem Design für Männer die keine "Frauen"-Skincare benutzen wollen.',
     rating: 4,
     image: '/products/jawline-mask.png',
     product: 'Jawline Mask',
@@ -37,59 +37,78 @@ export default function Testimonials() {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section ref={ref} className="py-20 md:py-28 bg-black">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section ref={ref} className="py-28 md:py-36 bg-bg-raised relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <motion.div
-          className="text-center mb-12"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
         >
-          <span className="text-[10px] tracking-[0.3em] uppercase text-white/30 font-medium">
-            Kundenstimmen
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mt-3">
-            Was unsere Kunden sagen
-          </h2>
+          <div className="lg:col-span-7">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="section-index">— 06 / Stimmen</span>
+              <div className="hairline w-24" />
+            </div>
+            <h2 className="display-heading text-4xl md:text-6xl lg:text-7xl text-bone">
+              Was unsere<br />
+              <span className="italic font-medium text-accent">Kunden sagen.</span>
+            </h2>
+          </div>
+          <div className="lg:col-span-4 lg:col-start-9 flex items-end">
+            <div className="border-l-2 border-accent/40 pl-6">
+              <div className="flex gap-1 mb-3">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-accent text-accent" />
+                ))}
+              </div>
+              <p className="text-sm text-bone/60 font-light">
+                <span className="text-bone font-semibold">4.8/5</span> aus über 1&apos;200 Bewertungen
+              </p>
+            </div>
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {testimonials.map((t, i) => (
             <motion.div
               key={t.name}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: i * 0.12 }}
-              className="group bg-bg-raised rounded-2xl border border-white/5 overflow-hidden transition-all duration-500 hover:border-white/10 flex flex-col"
+              transition={{ duration: 0.7, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="group bg-bg-card rounded-2xl border border-white/8 overflow-hidden transition-all duration-700 ease-editorial hover:border-accent/30 flex flex-col relative"
             >
-              <div className="relative aspect-[4/3] bg-gradient-to-br from-white/[0.04] to-white/[0.01] overflow-hidden">
+              <Quote className="absolute top-6 right-6 w-8 h-8 text-accent/15 z-10" />
+
+              <div className="relative aspect-[4/3] bg-gradient-to-br from-bg-raised to-bg-card overflow-hidden">
                 <Image
                   src={t.image}
                   alt={t.product}
                   fill
                   sizes="(max-width: 768px) 100vw, 400px"
-                  className="object-contain p-6 transition-transform duration-700 group-hover:scale-105"
+                  className="object-contain p-8 transition-all duration-1000 ease-editorial group-hover:scale-110"
                 />
-                <span className="absolute bottom-3 left-3 text-[10px] tracking-[0.2em] uppercase text-white/70 bg-black/50 backdrop-blur-sm rounded-full px-3 py-1 border border-white/10">
+                <div className="absolute inset-0 bg-gradient-to-t from-bg-card via-transparent to-transparent opacity-60" />
+                <span className="absolute bottom-4 left-4 text-[10px] tracking-[0.25em] uppercase text-accent bg-bg/80 backdrop-blur-md rounded-full px-3 py-1.5 border border-accent/30 font-medium">
                   {t.product}
                 </span>
               </div>
 
-              <div className="p-8 flex flex-col flex-1">
+              <div className="p-7 md:p-8 flex flex-col flex-1">
                 <div className="flex gap-1 mb-5">
                   {Array.from({ length: 5 }).map((_, j) => (
                     <Star
                       key={j}
-                      className={`w-4 h-4 ${j < t.rating ? 'fill-white text-white' : 'text-white/20'}`}
+                      className={`w-4 h-4 ${j < t.rating ? 'fill-accent text-accent' : 'text-white/15'}`}
                     />
                   ))}
                 </div>
-                <p className="text-sm text-white/60 leading-relaxed mb-6 flex-1">
+                <p className="text-[15px] text-bone/75 leading-relaxed mb-7 flex-1 font-light">
                   &ldquo;{t.text}&rdquo;
                 </p>
-                <div>
-                  <p className="text-sm font-semibold">{t.name}</p>
-                  <p className="text-xs text-white/30 mt-0.5">{t.location}</p>
+                <div className="pt-5 border-t border-white/5">
+                  <p className="text-sm font-semibold text-bone">{t.name}</p>
+                  <p className="text-xs text-bone/35 mt-1 tracking-wider uppercase">{t.location}</p>
                 </div>
               </div>
             </motion.div>
