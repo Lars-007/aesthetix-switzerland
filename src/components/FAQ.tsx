@@ -32,7 +32,7 @@ export default function FAQ() {
   const ref = useScrollReveal();
 
   return (
-    <section id="faq" ref={ref} className="reveal py-24 md:py-32">
+    <section id="faq" ref={ref} className="reveal py-24 md:py-32 bg-black border-b border-white/5">
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <span className="text-[10px] tracking-[0.3em] uppercase text-white/30 font-medium">

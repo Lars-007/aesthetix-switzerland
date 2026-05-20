@@ -30,7 +30,7 @@ export default function Testimonials() {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section ref={ref} className="py-20 md:py-28 bg-black">
+    <section ref={ref} className="py-20 md:py-28 bg-bg-raised border-y border-white/5">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
           className="text-center mb-12"
@@ -53,7 +53,7 @@ export default function Testimonials() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.12 }}
-              className="bg-bg-raised rounded-2xl border border-white/5 p-8 transition-all duration-500 hover:border-white/10"
+              className="bg-black rounded-2xl border border-white/5 p-8 transition-all duration-500 hover:border-white/10 hover:scale-[1.02]"
             >
               <div className="flex gap-1 mb-5">
                 {Array.from({ length: 5 }).map((_, j) => (

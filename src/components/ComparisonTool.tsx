@@ -53,7 +53,7 @@ export default function ComparisonTool() {
           {/* AFTER IMAGE (Background / Always visible on right side) */}
           <div className="absolute inset-0 w-full h-full">
             <Image
-              src="/after.png"
+              src="/after.jpg"
               alt="Nachher - Reine Haut und scharfe Jawline"
               fill
               className="object-cover pointer-events-none"
@@ -70,7 +70,7 @@ export default function ComparisonTool() {
             style={{ clipPath: `polygon(0 0, ${sliderPos}% 0, ${sliderPos}% 100%, 0 100%)` }}
           >
             <Image
-              src="/before.png"
+              src="/before.jpg"
               alt="Vorher - Unreinheiten und weiche Jawline"
               fill
               className="object-cover pointer-events-none"
