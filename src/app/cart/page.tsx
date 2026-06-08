@@ -6,6 +6,7 @@ import { Trash2, Minus, Plus, ShoppingBag, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import PageHeader from '@/components/PageHeader';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, totalPrice } = useCartStore();
@@ -36,7 +37,7 @@ export default function CartPage() {
           Weiter einkaufen
         </Link>
 
-        <h1 className="font-display text-3xl md:text-5xl font-bold mb-12">Warenkorb</h1>
+        <PageHeader label="Dein Einkauf" title="Warenkorb" />
 
         {items.length === 0 ? (
           <div className="text-center py-20">

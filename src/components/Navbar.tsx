@@ -6,13 +6,20 @@ import { useCartStore } from '@/store/cart';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { toggleCart, totalItems } = useCartStore();
   const count = totalItems();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setScrolled(scrollTop > 50);
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -58,6 +65,11 @@ export default function Navbar() {
             : 'bg-transparent'
         }`}
       >
+        {/* Scroll progress bar */}
+        <div
+          className="absolute bottom-0 left-0 h-px bg-gradient-to-r from-white/40 to-white transition-[width] duration-150 ease-out"
+          style={{ width: `${progress * 100}%`, opacity: scrolled ? 1 : 0 }}
+        />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
@@ -168,10 +180,10 @@ export default function Navbar() {
               onClick={() => setMobileOpen(false)}
               className="block w-full py-4 bg-white text-black text-center font-bold text-sm tracking-wider rounded-full hover:bg-white/90 transition-colors"
             >
-              UPGRADE YOUR LOOK
+              JETZT STARTEN
             </a>
             <p className="text-center text-white/30 text-xs mt-4 tracking-wide">
-              Facial Optimization for Men
+              Gesichtsoptimierung für Männer
             </p>
           </div>
         </div>

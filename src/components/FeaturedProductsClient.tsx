@@ -5,6 +5,7 @@ import ProductCard from './ProductCard';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { useScrollReveal } from '@/lib/hooks';
+import SectionLabel from './SectionLabel';
 
 export default function FeaturedProductsClient({ products }: { products: ShopifyProduct[] }) {
   const ref = useScrollReveal();
@@ -18,9 +19,7 @@ export default function FeaturedProductsClient({ products }: { products: Shopify
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-end justify-between mb-14">
           <div>
-            <span className="text-[10px] tracking-[0.3em] uppercase text-white/30 font-medium">
-              Bestseller
-            </span>
+            <SectionLabel align="left">Bestseller</SectionLabel>
             <h2 className="font-display text-3xl md:text-5xl font-bold mt-3">
               Beliebteste Produkte
             </h2>

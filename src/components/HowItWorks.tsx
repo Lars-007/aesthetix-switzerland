@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Package, Repeat, Sparkles } from 'lucide-react';
+import SectionHeader from './SectionHeader';
 
 const steps = [
   {
@@ -33,45 +34,40 @@ export default function HowItWorks() {
     <section id="how" ref={ref} className="py-20 md:py-28 bg-black">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
-          className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-[10px] tracking-[0.3em] uppercase text-white/50 font-medium">
-            In 3 Schritten
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mt-3 text-white">
-            So funktioniert es
-          </h2>
+          <SectionHeader index="N°05" label="In 3 Schritten" title="So funktioniert es" />
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {steps.map((step, i) => (
-            <motion.div
-              key={step.number}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
-              className="relative group"
-            >
-              <div className="bg-bg-raised rounded-2xl border border-white/5 p-8 hover:border-white/10 transition-all duration-500 h-full text-center">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <span className="font-display text-3xl font-bold text-white/15">
+        <div className="relative mt-16">
+          {/* Connecting timeline line (desktop) — aligned to the node centers */}
+          <div className="hidden md:block absolute top-10 left-[16.666%] right-[16.666%] h-px bg-gradient-to-r from-white/5 via-white/25 to-white/5" />
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-14 md:gap-8">
+            {steps.map((step, i) => (
+              <motion.div
+                key={step.number}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: i * 0.15 }}
+                className="relative flex flex-col items-center text-center"
+              >
+                {/* Node on the line — black ring masks the line so it reads as connected */}
+                <div className="relative z-10 mb-7">
+                  <div className="w-20 h-20 rounded-full bg-bg-raised border border-white/15 flex items-center justify-center shadow-[0_0_0_10px_#000] transition-all duration-500 hover:border-white/40 hover:scale-105">
+                    <step.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <span className="absolute -top-1.5 -right-1.5 w-7 h-7 rounded-full bg-white text-black text-xs font-display font-bold flex items-center justify-center">
                     {step.number}
                   </span>
-                  <step.icon className="w-5 h-5 text-white/50" />
                 </div>
-                <h3 className="text-lg font-bold mb-2 text-white">{step.title}</h3>
-                <p className="text-sm text-white/60 leading-relaxed">{step.description}</p>
-              </div>
-
-              {/* Connector line (desktop) */}
-              {i < steps.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-px bg-white/10" />
-              )}
-            </motion.div>
-          ))}
+                <h3 className="font-display text-xl font-bold mb-2 text-white">{step.title}</h3>
+                <p className="text-sm text-white/65 leading-relaxed max-w-xs">{step.description}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

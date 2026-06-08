@@ -1,18 +1,17 @@
 import { getShopPage } from '@/lib/shopify';
 import { Mail, MapPin, Clock } from 'lucide-react';
+import PageHeader from '@/components/PageHeader';
 
 export const metadata = {
   title: 'Kontakt – AESTHETIX Switzerland',
 };
 
 export default async function KontaktPage() {
-  const page = await getShopPage('kontakt');
+  const page = await getShopPage('kontakt').catch(() => null);
 
   return (
     <main className="min-h-screen pt-32 pb-16 px-6 max-w-3xl mx-auto">
-      <h1 className="font-display text-3xl md:text-5xl font-bold mb-10">
-        Kontakt
-      </h1>
+      <PageHeader label="Support" title="Kontakt" />
 
       {page?.body ? (
         <div
@@ -63,10 +62,6 @@ export default async function KontaktPage() {
               </div>
             </div>
           </div>
-
-          <p className="text-white/30 text-xs mt-8">
-            Du kannst diese Seite auch über Shopify Admin verwalten: Vertriebskanäle &rarr; Onlineshop &rarr; Seiten &rarr; Neue Seite &quot;kontakt&quot; erstellen.
-          </p>
         </div>
       )}
     </main>

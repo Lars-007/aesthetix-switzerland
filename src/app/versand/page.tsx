@@ -1,18 +1,17 @@
 import { getShopPolicies } from '@/lib/shopify';
+import PageHeader from '@/components/PageHeader';
 
 export const metadata = {
   title: 'Versandbedingungen – AESTHETIX Switzerland',
 };
 
 export default async function VersandPage() {
-  const policies = await getShopPolicies();
-  const policy = policies.shippingPolicy;
+  const policies = await getShopPolicies().catch(() => null);
+  const policy = policies?.shippingPolicy;
 
   return (
     <main className="min-h-screen pt-32 pb-16 px-6 max-w-3xl mx-auto">
-      <h1 className="font-display text-3xl md:text-5xl font-bold mb-10">
-        Versandbedingungen
-      </h1>
+      <PageHeader label="Rechtliches" title="Versandbedingungen" />
       {policy?.body ? (
         <div
           className="prose prose-invert max-w-none
@@ -28,7 +27,7 @@ export default async function VersandPage() {
         />
       ) : (
         <p className="text-white/50 text-sm">
-          Richtlinien werden geladen. Bitte im Shopify Admin unter Einstellungen &rarr; Richtlinien ausfüllen.
+          Diese Inhalte werden in Kürze ergänzt.
         </p>
       )}
     </main>

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useScrollReveal } from '@/lib/hooks';
+import SectionHeader from './SectionHeader';
 
 const faqs = [
   {
@@ -34,13 +35,8 @@ export default function FAQ() {
   return (
     <section id="faq" ref={ref} className="reveal py-24 md:py-32 bg-bg-raised border-y border-white/5">
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <span className="text-[10px] tracking-[0.3em] uppercase text-white/45 font-medium">
-            Fragen & Antworten
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mt-3">
-            FAQ
-          </h2>
+        <div className="mb-12">
+          <SectionHeader index="N°06" label="Fragen & Antworten" title="FAQ" />
         </div>
 
         <div className="flex flex-col gap-3">

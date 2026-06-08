@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Sparkles, Briefcase, Heart, UserCheck, TrendingUp, Crown, Zap, Target } from 'lucide-react';
+import SectionHeader from './SectionHeader';
 
 const blocks = [
   {
@@ -52,8 +53,8 @@ const blocks = [
     accentIcon: Zap,
     title: 'Mehr Selbstvertrauen',
     stat: '100%',
-    statLabel: 'Confidence-Boost',
-    description: 'Look good, feel good — ein positiver Feedback-Loop, der dein gesamtes Auftreten verändert.',
+    statLabel: 'mehr Selbstvertrauen',
+    description: 'Gut aussehen, gut fühlen — ein positiver Kreislauf, der dein gesamtes Auftreten verändert.',
     bullets: [
       'Bessere Körperhaltung',
       'Stärkerer Blickkontakt',
@@ -118,20 +119,17 @@ export default function HaloEffectSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <motion.div
-          className="max-w-2xl mx-auto text-center mb-16 md:mb-20"
+          className="mb-14 md:mb-20"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="text-[10px] tracking-[0.3em] uppercase text-white/50 font-medium">
-            Wissenschaftlich belegt
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 mb-4 text-white">
-            Was bringen dir AESTHETIX Produkte?
-          </h2>
-          <p className="text-white/70 text-base leading-relaxed">
-            Besseres Aussehen = messbar mehr Erfolg. Im Job, beim Dating und im Alltag.
-          </p>
+          <SectionHeader
+            index="N°02"
+            label="Wissenschaftlich belegt"
+            title="Was bringen dir AESTHETIX Produkte?"
+            description="Besseres Aussehen = messbar mehr Erfolg. Im Job, beim Dating und im Alltag."
+          />
         </motion.div>
 
         {/* Cards Grid */}
@@ -143,46 +141,52 @@ export default function HaloEffectSection() {
               initial="hidden"
               animate={isInView ? 'visible' : undefined}
               transition={{ delay: i * 0.08 }}
-              className="group relative bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-sm rounded-2xl border border-white/10 p-7 md:p-8 hover:border-white/20 transition-all duration-500 hover:from-white/[0.08] hover:to-white/[0.04]"
+              className="group relative bg-white/[0.03] rounded-2xl border border-white/10 p-7 md:p-9 hover:border-white/25 hover:bg-white/[0.05] hover:-translate-y-1 transition-all duration-500 overflow-hidden"
             >
-              {/* Top row: icon + stat */}
-              <div className="flex items-start justify-between mb-5">
-                <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:bg-white/15 transition-all duration-500">
-                  <block.icon className="w-5 h-5 text-white" />
-                </div>
+              {/* Card index */}
+              <span className="absolute top-6 right-7 font-display text-sm font-bold text-white/20 group-hover:text-white/40 transition-colors duration-500">
+                0{i + 1}
+              </span>
 
-                <motion.div
-                  className="text-right"
-                  variants={statVariants}
-                  initial="hidden"
-                  animate={isInView ? 'visible' : undefined}
-                  transition={{ delay: i * 0.15 }}
-                >
-                  <span className="block text-2xl md:text-3xl font-bold text-white font-display leading-none">
-                    {block.stat}
-                  </span>
-                  <span className="text-[10px] tracking-wider uppercase text-white/40">
-                    {block.statLabel}
-                  </span>
-                </motion.div>
+              {/* Icon */}
+              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-8 group-hover:scale-105 group-hover:bg-white/15 transition-all duration-500">
+                <block.icon className="w-5 h-5 text-white" />
               </div>
 
+              {/* Big stat */}
+              <motion.div
+                variants={statVariants}
+                initial="hidden"
+                animate={isInView ? 'visible' : undefined}
+                transition={{ delay: i * 0.15 }}
+              >
+                <span className="block font-display text-5xl md:text-6xl font-bold text-white leading-[0.85] tracking-tight">
+                  {block.stat}
+                </span>
+                <span className="block text-[10px] tracking-[0.25em] uppercase text-white/40 mt-2.5">
+                  {block.statLabel}
+                </span>
+              </motion.div>
+
+              {/* Hairline */}
+              <div className="h-px bg-white/10 my-7" />
+
               {/* Title + description */}
-              <h3 className="text-xl font-bold mb-2 text-white">{block.title}</h3>
-              <p className="text-sm text-white/60 leading-relaxed mb-5">{block.description}</p>
+              <h3 className="font-display text-xl font-bold mb-2.5 text-white">{block.title}</h3>
+              <p className="text-sm text-white/65 leading-relaxed mb-6">{block.description}</p>
 
               {/* Animated bullet bars */}
-              <div className="space-y-3">
+              <div className="space-y-3.5">
                 {block.bullets.map((bullet, j) => (
                   <div key={bullet} className="flex items-center gap-3">
                     <div className="relative w-full">
-                      <div className="flex items-center justify-between mb-1">
+                      <div className="flex items-center justify-between mb-1.5">
                         <span className="text-xs font-medium text-white/80">{bullet}</span>
                         <block.accentIcon className="w-3 h-3 text-white/30" />
                       </div>
                       <div className="h-[2px] bg-white/5 rounded-full overflow-hidden">
                         <motion.div
-                          className="h-full bg-gradient-to-r from-white/40 to-white/10 rounded-full"
+                          className="h-full bg-gradient-to-r from-white/50 to-white/10 rounded-full"
                           variants={barVariants}
                           custom={j}
                           initial="hidden"

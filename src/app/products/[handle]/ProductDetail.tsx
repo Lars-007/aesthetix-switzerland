@@ -84,7 +84,13 @@ export default function ProductDetail({ product }: { product: ShopifyProduct }) 
 
           {/* Info */}
           <div className="lg:py-4">
-            <h1 className="font-display text-3xl md:text-4xl font-bold mb-4">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="h-px w-8 bg-gradient-to-r from-transparent to-white/30" />
+              <span className="text-[10px] tracking-[0.3em] uppercase text-white/50 font-medium">
+                AESTHETIX
+              </span>
+            </div>
+            <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] mb-5">
               {product.title}
             </h1>
 
@@ -151,7 +157,7 @@ export default function ProductDetail({ product }: { product: ShopifyProduct }) 
             <div className="grid grid-cols-3 gap-4 mb-10">
               {[
                 { icon: Truck, text: '2-4 Werktage' },
-                { icon: Shield, text: 'Schweizer Qualität' },
+                { icon: Shield, text: 'EU-geprüft' },
                 { icon: Leaf, text: 'Naturbasiert' },
               ].map((badge) => (
                 <div key={badge.text} className="flex flex-col items-center gap-2 text-center bg-bg-raised rounded-xl py-4 px-2 border border-white/10 hover:border-white/20 transition-colors">

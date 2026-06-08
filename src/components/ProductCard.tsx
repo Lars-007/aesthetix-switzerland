@@ -55,7 +55,7 @@ export default function ProductCard({ product }: { product: ShopifyProduct }) {
             )}
             {hasDiscount && !soldOut && (
               <span className="bg-white text-black text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider">
-                SALE
+                ANGEBOT
               </span>
             )}
           </div>
