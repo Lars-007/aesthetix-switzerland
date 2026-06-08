@@ -7,7 +7,7 @@ import { Shield, Leaf, Eye } from 'lucide-react';
 const reasons = [
   {
     icon: Shield,
-    title: 'Schweizer Qualität',
+    title: 'EU-geprüfte Qualität',
     description: 'Pures Niacinamid & Mineralien. Keine Füllstoffe, keine Kompromisse.',
   },
   {
@@ -27,7 +27,7 @@ export default function WhySection() {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="why" ref={ref} className="py-20 md:py-28">
+    <section id="why" ref={ref} className="py-20 md:py-28 bg-bg-raised border-y border-white/5">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
           className="text-center mb-12"
@@ -50,13 +50,13 @@ export default function WhySection() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.12 }}
-              className="group bg-bg-raised rounded-2xl border border-white/5 hover:border-white/10 p-8 transition-all duration-500 text-center"
+              className="group bg-white/[0.04] rounded-2xl border border-white/10 hover:border-white/20 p-8 transition-all duration-500 text-center"
             >
               <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-5 mx-auto group-hover:bg-white/20 group-hover:scale-110 transition-all duration-500">
                 <reason.icon className="w-5 h-5 text-white/80" />
               </div>
               <h3 className="text-lg font-bold mb-2 text-white">{reason.title}</h3>
-              <p className="text-sm text-white/60 leading-relaxed">{reason.description}</p>
+              <p className="text-sm text-white/70 leading-relaxed">{reason.description}</p>
             </motion.div>
           ))}
         </div>

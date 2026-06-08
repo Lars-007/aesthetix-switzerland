@@ -32,10 +32,10 @@ export default function FAQ() {
   const ref = useScrollReveal();
 
   return (
-    <section id="faq" ref={ref} className="reveal py-24 md:py-32 bg-black border-b border-white/5">
+    <section id="faq" ref={ref} className="reveal py-24 md:py-32 bg-bg-raised border-y border-white/5">
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <span className="text-[10px] tracking-[0.3em] uppercase text-white/30 font-medium">
+          <span className="text-[10px] tracking-[0.3em] uppercase text-white/45 font-medium">
             Fragen & Antworten
           </span>
           <h2 className="font-display text-3xl md:text-5xl font-bold mt-3">
@@ -47,7 +47,7 @@ export default function FAQ() {
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className="bg-bg-raised rounded-xl border border-white/5 overflow-hidden transition-all duration-300 hover:border-white/10"
+              className="bg-white/[0.04] rounded-xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/20"
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
@@ -55,7 +55,7 @@ export default function FAQ() {
               >
                 <span className="text-sm font-semibold pr-4">{faq.q}</span>
                 <ChevronDown
-                  className={`w-4 h-4 text-white/30 flex-shrink-0 transition-transform duration-300 ${
+                  className={`w-4 h-4 text-white/50 flex-shrink-0 transition-transform duration-300 ${
                     open === i ? 'rotate-180' : ''
                   }`}
                 />
@@ -65,7 +65,7 @@ export default function FAQ() {
                   open === i ? 'max-h-96 pb-6' : 'max-h-0'
                 }`}
               >
-                <p className="px-6 text-sm text-white/40 leading-relaxed">{faq.a}</p>
+                <p className="px-6 text-sm text-white/65 leading-relaxed">{faq.a}</p>
               </div>
             </div>
           ))}

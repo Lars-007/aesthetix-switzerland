@@ -8,13 +8,13 @@ export default function CtaBanner() {
   const ref = useScrollReveal();
 
   return (
-    <section ref={ref} className="reveal py-24 md:py-32">
+    <section ref={ref} className="reveal py-24 md:py-32 bg-black">
       <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
         <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
           Bereit, dein Aussehen<br className="hidden sm:block" /> auf das nächste Level zu bringen?
         </h2>
-        <p className="text-base text-white/40 max-w-xl mx-auto mb-10">
-          Starte jetzt mit AESTHETIX und erlebe den Unterschied. Schweizer Qualität, sichtbare Resultate.
+        <p className="text-base text-white/60 max-w-xl mx-auto mb-10">
+          Starte jetzt mit AESTHETIX und erlebe den Unterschied. EU-geprüfte Qualität, sichtbare Resultate.
         </p>
         <Link
           href="/products"

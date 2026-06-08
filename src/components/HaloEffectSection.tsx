@@ -106,7 +106,7 @@ export default function HaloEffectSection() {
     <section
       id="mission"
       ref={sectionRef}
-      className="py-24 md:py-32 bg-black/50 border-y border-white/5 relative overflow-hidden"
+      className="py-24 md:py-32 bg-bg-raised border-y border-white/5 relative overflow-hidden"
     >
       {/* Animated background glow */}
       <motion.div
@@ -129,7 +129,7 @@ export default function HaloEffectSection() {
           <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 mb-4 text-white">
             Was bringen dir AESTHETIX Produkte?
           </h2>
-          <p className="text-white/60 text-base leading-relaxed">
+          <p className="text-white/70 text-base leading-relaxed">
             Besseres Aussehen = messbar mehr Erfolg. Im Job, beim Dating und im Alltag.
           </p>
         </motion.div>

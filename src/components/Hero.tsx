@@ -63,6 +63,8 @@ export default function Hero() {
         {/* Gradient overlays */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
+        {/* Film grain for depth */}
+        <div className="absolute inset-0 noise-overlay opacity-[0.07] mix-blend-overlay pointer-events-none" />
       </div>
 
       {/* Content */}
@@ -78,9 +80,9 @@ export default function Hero() {
           <span className="animate-blink font-thin text-white/50">|</span>
         </h1>
 
-        <p className="text-base sm:text-lg text-white/50 max-w-xl mx-auto mb-12 leading-relaxed">
+        <p className="text-base sm:text-lg text-white/65 max-w-xl mx-auto mb-12 leading-relaxed">
           Verbessere dein Aussehen mit hochwertigen AESTHETIX Produkten.
-          Entwickelt in der Schweiz für den modernen Mann.
+          Schweizer Marke für den modernen Mann.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

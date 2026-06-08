@@ -37,7 +37,7 @@ export default function ComparisonTool() {
           <h2 className="font-display text-3xl md:text-5xl font-bold mt-4 mb-4 text-white">
             Siehe den Unterschied
           </h2>
-          <p className="text-sm md:text-base text-white/55 max-w-xl mx-auto leading-relaxed">
+          <p className="text-sm md:text-base text-white/65 max-w-xl mx-auto leading-relaxed">
             Schiebe den Regler, um die Veränderung zu vergleichen. Konsequente Pflege sorgt für ein
             deutlich klareres Hautbild, reduzierte Unreinheiten und eine markantere Gesichtskontur.
           </p>
